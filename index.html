@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="es">
+<head>
+
+
+<link rel="manifest" href="./manifest.webmanifest">
+
+<meta name="theme-color" content="#0b0d10">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Masa pizza">
+
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon-180.png">
+
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calculadora de masa de pizza</title>
+  <style>
+    :root { --bg:#0b0d10; --card:#12151b; --text:#e8eef7; --muted:#a9b4c4; --line:#242b36; }
+    body {
+      margin:0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Arial, sans-serif;
+      background: radial-gradient(1000px 500px at 20% 0%, #1a2230 0%, var(--bg) 55%);
+      color: var(--text);
+    }
+    .wrap { max-width: 820px; margin: 0 auto; padding: 28px 16px 60px; }
+    h1 { margin: 0 0 6px; font-size: 22px; }
+    p { margin: 0 0 18px; color: var(--muted); line-height: 1.45; }
+    .grid { display:grid; grid-template-columns: 1fr; gap: 14px; }
+    @media (min-width: 760px){ .grid { grid-template-columns: 1.1fr 0.9fr; } }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.28);
+    }
+    label { display:block; font-size: 13px; color: var(--muted); margin: 10px 0 6px; }
+    input, select, button{
+      width:100%; box-sizing:border-box;
+      background: #0e1117;
+      border: 1px solid var(--line);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 15px;
+      outline: none;
+    }
+    input:focus, select:focus { border-color: #3a79ff; }
+    .row { display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .small { font-size: 12px; color: var(--muted); margin-top: 10px; }
+    table { width:100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { text-align:left; padding: 10px 8px; border-bottom: 1px solid var(--line); }
+    th { color: var(--muted); font-weight: 600; font-size: 13px; }
+    td { font-size: 15px; }
+    .right { text-align:right; }
+    .pill {
+      display:inline-block; padding: 6px 10px; border-radius: 999px;
+      border: 1px solid var(--line); color: var(--muted); font-size: 12px;
+      background: rgba(255,255,255,0.02);
+    }
+    .topline { display:flex; gap: 10px; align-items:center; justify-content:space-between; flex-wrap: wrap; }
+    .muted { color: var(--muted); }
+    .btns { display:flex; gap:10px; margin-top: 12px; flex-wrap: wrap; }
+    button { width:auto; cursor:pointer; }
+    button.primary { background: #2b6cff; border-color:#2b6cff; }
+    button.secondary { background: transparent; }
+    .note { margin-top: 12px; color: var(--muted); font-size: 13px; }
+    .mono { font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topline">
+      <div>
+        <h1>Calculadora de masa de pizza (por bolas)</h1>
+        <p>Elige cuántas bolas quieres y cuánto pesa cada una. La app escala los ingredientes desde tu receta base.</p>
+      </div>
+      <span class="pill" id="basePill">Base: 1 bola = 297 g</span>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2 style="margin:0 0 6px; font-size:16px;">Entradas</h2>
+
+        <label for="flourMode">Tipo de harina</label>
+        <select id="flourMode">
+          <option value="mix" selected>Harina normal + harina integral</option>
+          <option value="normalOnly">Solo harina normal</option>
+        </select>
+
+        <div class="row">
+          <div>
+            <label for="balls">Número de bolas</label>
+            <input id="balls" type="number" min="1" step="1" value="2" />
+          </div>
+          <div>
+            <label for="ballWeight">Gramos por bola</label>
+            <input id="ballWeight" type="number" min="1" step="1" value="297" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="rounding">Redondeo</label>
+            <select id="rounding">
+              <option value="0">Sin redondeo</option>
+              <option value="0.1" selected>0,1 g</option>
+              <option value="0.5">0,5 g</option>
+              <option value="1">1 g</option>
+            </select>
+          </div>
+          <div>
+            <label for="mode">Modo de escalado</label>
+            <select id="mode">
+              <option value="perBall" selected>Escalar por gramos por bola (recomendado)</option>
+              <option value="totalOnly">Escalar por peso total (bolas × gramos)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="btns">
+          <button class="primary" id="copyBtn">Copiar lista</button>
+          <button class="secondary" id="resetBtn">Reset a base</button>
+        </div>
+
+        <div class="note" id="summary"></div>
+        <div class="small">
+          Receta base (1 bola de 297 g): 123,25 normal + 52,90 integral + 115 agua + 5,5 sal + 1 levadura.
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 style="margin:0 0 6px; font-size:16px;">Resultados</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Ingrediente</th>
+              <th class="right">Cantidad</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+          <tfoot>
+            <tr>
+              <td class="muted"><strong>Total masa (objetivo)</strong></td>
+              <td class="right mono" id="targetTotal"></td>
+            </tr>
+          </tfoot>
+        </table>
+
+        <div class="note" id="baseCheck"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const BASE_BALL_G = 297;
+
+    const BASE = [
+      { key: "harina_normal", name: "Harina normal", grams: 123.25 },
+      { key: "harina_integral", name: "Harina integral", grams: 52.90 },
+      { key: "agua", name: "Agua", grams: 115.00 },
+      { key: "sal", name: "Sal", grams: 5.50 },
+      { key: "levadura", name: "Levadura", grams: 1.00 },
+    ];
+
+    const elFlourMode = document.getElementById("flourMode");
+    const elBalls = document.getElementById("balls");
+    const elBallWeight = document.getElementById("ballWeight");
+    const elRounding = document.getElementById("rounding");
+    const elMode = document.getElementById("mode");
+    const tbody = document.getElementById("tbody");
+    const targetTotal = document.getElementById("targetTotal");
+    const summary = document.getElementById("summary");
+    const baseCheck = document.getElementById("baseCheck");
+    const copyBtn = document.getElementById("copyBtn");
+    const resetBtn = document.getElementById("resetBtn");
+
+    function roundTo(x, step) {
+      if (!step || step === 0) return x;
+      return Math.round(x / step) * step;
+    }
+
+    function fmt(x) {
+      const isInt = Math.abs(x - Math.round(x)) < 1e-9;
+      const decimals = isInt ? 0 : (Math.abs(x * 10 - Math.round(x * 10)) < 1e-9 ? 1 : 2);
+      return x.toLocaleString("es-ES", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+    }
+
+    function compute() {
+      const balls = Math.max(1, Math.floor(Number(elBalls.value) || 1));
+      const ballG = Math.max(1, Number(elBallWeight.value) || BASE_BALL_G);
+      const roundingStep = Number(elRounding.value);
+      const mode = elMode.value;
+      const flourMode = elFlourMode.value;
+
+      const target = balls * ballG;
+
+      const factor = (mode === "perBall")
+        ? (ballG / BASE_BALL_G) * balls
+        : (target / BASE_BALL_G);
+
+      // 1) Calcula ingredientes escalados
+      let rows = BASE.map(item => {
+        const raw = item.grams * factor;
+        const rounded = roundTo(raw, roundingStep);
+        return { ...item, raw, rounded };
+      });
+
+      // 2) Si el usuario elige "solo harina normal":
+      //    - suma harina integral a harina normal
+      //    - harina integral pasa a 0 y no se renderiza
+      if (flourMode === "normalOnly") {
+        const normal = rows.find(r => r.key === "harina_normal");
+        const integral = rows.find(r => r.key === "harina_integral");
+        if (normal && integral) {
+          const combinedRaw = normal.raw + integral.raw;
+          const combinedRounded = roundTo(combinedRaw, roundingStep);
+
+          normal.raw = combinedRaw;
+          normal.rounded = combinedRounded;
+
+          integral.raw = 0;
+          integral.rounded = 0;
+
+          // Oculta integral en la tabla
+          rows = rows.filter(r => r.key !== "harina_integral");
+        }
+      }
+
+      // Render tabla
+      tbody.innerHTML = "";
+      for (const r of rows) {
+        const tr = document.createElement("tr");
+        const td1 = document.createElement("td");
+        td1.textContent = r.name;
+
+        const td2 = document.createElement("td");
+        td2.className = "right mono";
+        td2.textContent = `${fmt(r.rounded)} g`;
+
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tbody.appendChild(tr);
+      }
+
+      targetTotal.textContent = `${fmt(target)} g`;
+
+      summary.innerHTML = `<span class="pill mono">${balls} bola(s) × ${fmt(ballG)} g</span>
+        <span class="muted">Factor: </span><span class="pill mono">${factor.toFixed(4)}</span>
+        <span class="muted">Harina: </span><span class="pill">${flourMode === "mix" ? "normal + integral" : "solo normal"}</span>`;
+
+      const baseSum = BASE.reduce((a,b)=>a+b.grams,0);
+      const diff = baseSum - BASE_BALL_G;
+      const diffAbs = Math.abs(diff);
+      baseCheck.textContent = diffAbs < 0.05
+        ? `La suma de la receta base cuadra con 297 g.`
+        : `Nota: la suma de tu receta base da ${fmt(baseSum)} g (diferencia ${fmt(diff)} g vs 297 g). La app escala usando 297 g como referencia.`;
+    }
+
+    function buildClipboardText() {
+      const balls = Math.max(1, Math.floor(Number(elBalls.value) || 1));
+      const ballG = Math.max(1, Number(elBallWeight.value) || BASE_BALL_G);
+      const roundingStep = Number(elRounding.value);
+      const mode = elMode.value;
+      const flourMode = elFlourMode.value;
+
+      const target = balls * ballG;
+      const factor = (mode === "perBall") ? (ballG / BASE_BALL_G) * balls : (target / BASE_BALL_G);
+
+      let rows = BASE.map(item => ({ ...item, gramsScaled: roundTo(item.grams * factor, roundingStep) }));
+
+      if (flourMode === "normalOnly") {
+        const n = rows.find(r => r.key === "harina_normal");
+        const i = rows.find(r => r.key === "harina_integral");
+        if (n && i) {
+          n.gramsScaled = roundTo(n.gramsScaled + i.gramsScaled, roundingStep);
+          // No incluir integral en el texto
+          rows = rows.filter(r => r.key !== "harina_integral");
+        }
+      }
+
+      const lines = [];
+      lines.push(`Masa de pizza — ${balls} bola(s) × ${fmt(ballG)} g (total ${fmt(target)} g)`);
+      lines.push(`Harina: ${flourMode === "mix" ? "normal + integral" : "solo normal"}`);
+      lines.push(`Factor: ${factor.toFixed(4)}`);
+      for (const item of rows) {
+        lines.push(`- ${item.name}: ${fmt(item.gramsScaled)} g`);
+      }
+      return lines.join("\n");
+    }
+
+    copyBtn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(buildClipboardText());
+        copyBtn.textContent = "Copiado";
+        setTimeout(()=> copyBtn.textContent = "Copiar lista", 900);
+      } catch {
+        const ta = document.createElement("textarea");
+        ta.value = buildClipboardText();
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        copyBtn.textContent = "Copiado";
+        setTimeout(()=> copyBtn.textContent = "Copiar lista", 900);
+      }
+    });
+
+    resetBtn.addEventListener("click", () => {
+      elFlourMode.value = "mix";
+      elBalls.value = 1;
+      elBallWeight.value = BASE_BALL_G;
+      elRounding.value = "0.1";
+      elMode.value = "perBall";
+      compute();
+    });
+
+    [elFlourMode, elBalls, elBallWeight, elRounding, elMode].forEach(el => el.addEventListener("input", compute));
+    compute();
+  </script>
+</body>
+</html>
