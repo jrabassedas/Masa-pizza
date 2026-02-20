@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Masa pizza</title>
+
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="theme-color" content="#0b0d10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Masa pizza">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon-180.png">
+
+  <style>
+    :root{
+      --bg:#0b0d10;
+      --text:#e8eef7;
+      --muted:#a9b4c4;
+      --line:#242b36;
+      --accent:#2b6cff;
+      --good:#2bd47d;
+      --warn:#ffcc66;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Arial,sans-serif;
+      background:
+        radial-gradient(1000px 500px at 20% 0%, #1a2230 0%, var(--bg) 55%),
+        radial-gradient(900px 450px at 85% 15%, #141b29 0%, rgba(11,13,16,0) 60%),
+        var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    .wrap{ max-width:920px; margin:0 auto; padding:28px 16px 64px; }
+    .topline{ display:flex; gap:14px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; }
+    h1{ margin:0 0 6px; font-size:24px; letter-spacing:.2px; }
+    p{ margin:0; color:var(--muted); line-height:1.5; }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px; border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.02);
+      color:var(--muted);
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .pill strong{ color:var(--text); font-weight:650; }
+    .okdot,.warndot{ width:8px; height:8px; border-radius:99px; display:inline-block; }
+    .okdot{ background:var(--good); }
+    .warndot{ background:var(--warn); }
+
+    .grid{ display:grid; grid-template-columns:1fr; gap:14px; margin-top:14px; }
+    @media (min-width:860px){ .grid{ grid-template-columns:1.1fr .9fr; } }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.012));
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+      box-shadow:0 14px 38px rgba(0,0,0,.32);
+      backdrop-filter:blur(6px);
+    }
+    .card h2{
+      margin:0 0 8px;
+      font-size:15px;
+      letter-spacing:.2px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .hint{ color:var(--muted); font-size:12px; }
+
+    .row{ display:grid; grid-template-columns:1fr; gap:10px; }
+    @media (min-width:520px){ .row.two{ grid-template-columns:1fr 1fr; } }
+
+    label{ display:block; font-size:13px; color:var(--muted); margin:10px 0 6px; }
+    input,select,button{
+      width:100%;
+      background:#0e1117;
+      border:1px solid var(--line);
+      color:var(--text);
+      padding:12px 12px;
+      border-radius:14px;
+      font-size:16px; /* 16px evita zoom automático en iOS */
+      outline:none;
+      transition:border-color .15s ease, box-shadow .15s ease, transform .04s ease;
+    }
+    input::placeholder{ color:rgba(169,180,196,.6); }
+    input:focus,select:focus{
+      border-color:rgba(43,108,255,.85);
+      box-shadow:0 0 0 3px rgba(43,108,255,.18);
+    }
+    .fieldline{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .fieldline .mini{
+      font-size:12px; color:var(--muted);
+      padding:6px 10px; border:1px solid var(--line);
+      border-radius:999px; background:rgba(255,255,255,0.02);
+      white-space:nowrap;
+    }
+
+    .btns{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+    button{ width:auto; cursor:pointer; user-select:none; }
+    button.primary{ background:var(--accent); border-color:var(--accent); }
+    button.primary:active{ transform:translateY(1px); }
+    button.secondary{ background:transparent; }
+    button.secondary:hover{ border-color:rgba(255,255,255,0.22); }
+
+    .note{ margin-top:12px; color:var(--muted); font-size:13px; line-height:1.45; }
+
+    table{ width:100%; border-collapse:collapse; margin-top:8px; }
+    th,td{ padding:10px 8px; border-bottom:1px solid var(--line); }
+    th{ color:var(--muted); font-weight:650; font-size:12px; text-align:left; }
+    td{ font-size:15px; }
+    .right{ text-align:right; }
+    .mono{ font-variant-numeric: tabular-nums; }
+
+    .empty{
+      padding:14px 12px;
+      border:1px dashed rgba(36,43,54,.9);
+      border-radius:14px;
+      color:rgba(169,180,196,.85);
+      background:rgba(255,255,255,0.01);
+      margin-top:10px;
+      line-height:1.5;
+      font-size:13px;
+    }
+    .divider{ height:1px; background:var(--line); margin:12px 0; opacity:.9; }
+    .tag{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px; border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.02);
+      color:var(--muted);
+      font-size:12px;
+    }
+    .tag b{ color:var(--text); font-weight:650; }
+    .footerline{
+      display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
+      margin-top:10px; color:var(--muted); font-size:12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topline">
+      <div>
+        <h1>Masa pizza</h1>
+        <p>Calcula ingredientes por <strong>bolas</strong> y <strong>peso</strong>. La hidratación ajusta agua/harina para que el total cuadre (sal y levadura fijas).</p>
+      </div>
+      <div class="pill" title="Receta base usada como referencia">
+        <span class="okdot"></span>
+        <span>Base: <strong>1 bola = 297 g</strong></span>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>
+          <span>Entradas</span>
+          <span class="hint">El teclado avanza solo</span>
+        </h2>
+
+        <div class="row two">
+          <div>
+            <div class="fieldline">
+              <label for="balls" style="margin:10px 0 6px;">Número de bolas</label>
+              <span class="mini" id="ballsHint">vacío</span>
+            </div>
+            <input
+              id="balls"
+              type="number"
+              min="1"
+              step="1"
+              inputmode="numeric"
+              placeholder="Ej: 4"
+              value=""
+              autocomplete="off"
+              enterkeyhint="next"
+            >
+          </div>
+
+          <div>
+            <div class="fieldline">
+              <label for="ballWeight" style="margin:10px 0 6px;">Gramos por bola</label>
+              <span class="mini" id="gramsHint">vacío</span>
+            </div>
+            <input
+              id="ballWeight"
+              type="number"
+              min="1"
+              step="1"
+              inputmode="numeric"
+              placeholder="Ej: 300"
+              value=""
+              autocomplete="off"
+              enterkeyhint="next"
+            >
+          </div>
+        </div>
+
+        <div class="row two">
+          <div>
+            <label for="hydration">Hidratación (%)</label>
+            <input
+              id="hydration"
+              type="number"
+              min="0"
+              max="100"
+              step="0.1"
+              inputmode="decimal"
+              value="65"
+              autocomplete="off"
+              enterkeyhint="next"
+            >
+          </div>
+          <div>
+            <label for="integralPct">% harina integral</label>
+            <input
+              id="integralPct"
+              type="number"
+              min="0"
+              max="100"
+              step="0.1"
+              inputmode="decimal"
+              value="0"
+              autocomplete="off"
+              enterkeyhint="done"
+            >
+          </div>
+        </div>
+
+        <div class="row two">
+          <div>
+            <label for="rounding">Redondeo</label>
+            <select id="rounding">
+              <option value="0">Sin redondeo</option>
+              <option value="0.1" selected>0,1 g</option>
+              <option value="0.5">0,5 g</option>
+              <option value="1">1 g</option>
+            </select>
+          </div>
+          <div></div>
+        </div>
+
+        <div class="btns">
+          <button class="primary" id="copyBtn" type="button">Copiar lista</button>
+          <button class="secondary" id="resetBtn" type="button">Limpiar</button>
+        </div>
+
+        <div class="note" id="summary"></div>
+
+        <div class="divider"></div>
+        <div class="footerline">
+          <span class="tag">
+            <span class="warndot"></span>
+            <span>Total: <b>cuadra</b></span>
+          </span>
+          <span class="hint">Siguiente campo automático: bolas → gramos → hidratación → % integral.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>
+          <span>Resultados</span>
+          <span class="hint" id="statusHint">—</span>
+        </h2>
+
+        <div id="emptyState" class="empty">
+          Introduce <strong>número de bolas</strong> y <strong>gramos por bola</strong> para ver los ingredientes.
+        </div>
+
+        <div id="resultsWrap" style="display:none;">
+          <table>
+            <thead>
+              <tr>
+                <th>Ingrediente</th>
+                <th class="right">Cantidad</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+            <tfoot>
+              <tr>
+                <td class="hint"><strong>Total masa (objetivo)</strong></td>
+                <td class="right mono" id="targetTotal"></td>
+              </tr>
+            </tfoot>
+          </table>
+
+          <div class="note" id="baseCheck"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Receta base (por 1 bola de 297 g)
+    const BASE_BALL_G = 297;
+    const BASE_WATER = 115.0; // solo referencia
+    const BASE_SALT = 5.5;
+    const BASE_YEAST = 1.0;
+
+    const elBalls = document.getElementById("balls");
+    const elBallWeight = document.getElementById("ballWeight");
+    const elHydration = document.getElementById("hydration");
+    const elIntegralPct = document.getElementById("integralPct");
+    const elRounding = document.getElementById("rounding");
+
+    const ballsHint = document.getElementById("ballsHint");
+    const gramsHint = document.getElementById("gramsHint");
+    const statusHint = document.getElementById("statusHint");
+
+    const emptyState = document.getElementById("emptyState");
+    const resultsWrap = document.getElementById("resultsWrap");
+    const tbody = document.getElementById("tbody");
+    const targetTotal = document.getElementById("targetTotal");
+    const summary = document.getElementById("summary");
+    const baseCheck = document.getElementById("baseCheck");
+
+    const copyBtn = document.getElementById("copyBtn");
+    const resetBtn = document.getElementById("resetBtn");
+
+    function clamp(n, min, max){ return Math.min(max, Math.max(min, n)); }
+
+    function roundTo(x, step){
+      if (!step || step === 0) return x;
+      return Math.round(x / step) * step;
+    }
+
+    function fmt(x){
+      const isInt = Math.abs(x - Math.round(x)) < 1e-9;
+      const d1 = Math.abs(x * 10 - Math.round(x * 10)) < 1e-9;
+      const decimals = isInt ? 0 : (d1 ? 1 : 2);
+      return x.toLocaleString("es-ES", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+    }
+
+    function parsePositiveInt(val){
+      const n = Number(val);
+      if (!Number.isFinite(n)) return null;
+      const i = Math.floor(n);
+      return i >= 1 ? i : null;
+    }
+
+    function parsePositiveNumber(val){
+      const n = Number(val);
+      if (!Number.isFinite(n)) return null;
+      return n > 0 ? n : null;
+    }
+
+    function addRow(name, grams){
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td>${name}</td><td class="right mono">${fmt(grams)} g</td>`;
+      tbody.appendChild(tr);
+    }
+
+    function compute(){
+      const balls = parsePositiveInt(elBalls.value);
+      const ballG = parsePositiveNumber(elBallWeight.value);
+
+      ballsHint.textContent = balls ? `${balls} u` : "vacío";
+      gramsHint.textContent = ballG ? `${fmt(ballG)} g` : "vacío";
+
+      if (!balls || !ballG){
+        statusHint.textContent = "A la espera de datos";
+        emptyState.style.display = "";
+        resultsWrap.style.display = "none";
+        tbody.innerHTML = "";
+        summary.textContent = "";
+        return;
+      }
+
+      const roundingStep = Number(elRounding.value);
+
+      const hydrationRaw = Number(elHydration.value);
+      const hydration = clamp(Number.isFinite(hydrationRaw) ? hydrationRaw : 0, 0, 100);
+
+      const integralPctRaw = Number(elIntegralPct.value);
+      const integralPct = clamp(Number.isFinite(integralPctRaw) ? integralPctRaw : 0, 0, 100);
+
+      const target = balls * ballG;
+
+      // Sal y levadura FIJAS (escaladas por tamaño respecto a la receta base)
+      const factor = target / BASE_BALL_G;
+      const saltRaw = BASE_SALT * factor;
+      const yeastRaw = BASE_YEAST * factor;
+
+      // target = flour + flour*(h/100) + salt + yeast
+      const flourTotalRaw = (target - saltRaw - yeastRaw) / (1 + (hydration / 100));
+      if (!(flourTotalRaw > 0)){
+        statusHint.textContent = "Datos inválidos";
+        emptyState.style.display = "";
+        resultsWrap.style.display = "none";
+        tbody.innerHTML = "";
+        summary.textContent = "El total objetivo es demasiado bajo para sal/levadura.";
+        return;
+      }
+
+      const waterRaw = flourTotalRaw * (hydration / 100);
+
+      const flourIntegralRaw = flourTotalRaw * (integralPct / 100);
+      const flourNormalRaw = flourTotalRaw - flourIntegralRaw;
+
+      const flourNormal = roundTo(flourNormalRaw, roundingStep);
+      const flourIntegral = roundTo(flourIntegralRaw, roundingStep);
+      const water = roundTo(waterRaw, roundingStep);
+      const salt = roundTo(saltRaw, roundingStep);
+      const yeast = roundTo(yeastRaw, roundingStep);
+
+      tbody.innerHTML = "";
+      addRow("Harina normal", flourNormal);
+      if (integralPct > 0) addRow("Harina integral", flourIntegral);
+      addRow("Agua", water);
+      addRow("Sal", salt);
+      addRow("Levadura", yeast);
+
+      targetTotal.textContent = `${fmt(target)} g`;
+
+      summary.innerHTML =
+        `<span class="tag"><b>${balls}</b>&nbsp;bola(s)</span> ` +
+        `<span class="tag"><b>${fmt(ballG)}</b>&nbsp;g/bola</span> ` +
+        `<span class="tag">Hidratación: <b>${fmt(hydration)}</b>%</span> ` +
+        `<span class="tag">% integral: <b>${fmt(integralPct)}</b>%</span> ` +
+        `<span class="tag mono">Sal: <b>${fmt(salt)}</b> g</span> ` +
+        `<span class="tag mono">Levadura: <b>${fmt(yeast)}</b> g</span>`;
+
+      const baseHydrationApprox = (BASE_WATER / (123.25 + 52.90)) * 100;
+      baseCheck.textContent =
+        `Referencia: tu receta base es ~${fmt(baseHydrationApprox)}% de hidratación.`;
+
+      statusHint.textContent = "Listo";
+      emptyState.style.display = "none";
+      resultsWrap.style.display = "";
+    }
+
+    function buildClipboardText(){
+      const balls = parsePositiveInt(elBalls.value);
+      const ballG = parsePositiveNumber(elBallWeight.value);
+      if (!balls || !ballG) return "Masa pizza — rellena número de bolas y gramos por bola.";
+
+      const roundingStep = Number(elRounding.value);
+
+      const hydration = clamp(Number(elHydration.value) || 0, 0, 100);
+      const integralPct = clamp(Number(elIntegralPct.value) || 0, 0, 100);
+
+      const target = balls * ballG;
+      const factor = target / BASE_BALL_G;
+
+      const saltRaw = BASE_SALT * factor;
+      const yeastRaw = BASE_YEAST * factor;
+
+      const flourTotal = (target - saltRaw - yeastRaw) / (1 + (hydration / 100));
+      const water = flourTotal * (hydration / 100);
+
+      const integral = flourTotal * (integralPct / 100);
+      const normal = flourTotal - integral;
+
+      const lines = [];
+      lines.push(`Masa pizza — ${balls} bola(s) × ${fmt(ballG)} g (total ${fmt(target)} g)`);
+      lines.push(`Hidratación: ${fmt(hydration)}% | % integral: ${fmt(integralPct)}%`);
+      lines.push(`- Harina normal: ${fmt(roundTo(normal, roundingStep))} g`);
+      if (integralPct > 0) lines.push(`- Harina integral: ${fmt(roundTo(integral, roundingStep))} g`);
+      lines.push(`- Agua: ${fmt(roundTo(water, roundingStep))} g`);
+      lines.push(`- Sal: ${fmt(roundTo(saltRaw, roundingStep))} g`);
+      lines.push(`- Levadura: ${fmt(roundTo(yeastRaw, roundingStep))} g`);
+      return lines.join("\n");
+    }
+
+    copyBtn.addEventListener("click", async () => {
+      try{
+        await navigator.clipboard.writeText(buildClipboardText());
+        const prev = copyBtn.textContent;
+        copyBtn.textContent = "Copiado";
+        setTimeout(()=> copyBtn.textContent = prev, 900);
+      } catch {
+        const ta = document.createElement("textarea");
+        ta.value = buildClipboardText();
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        const prev = copyBtn.textContent;
+        copyBtn.textContent = "Copiado";
+        setTimeout(()=> copyBtn.textContent = prev, 900);
+      }
+    });
+
+    resetBtn.addEventListener("click", () => {
+      elBalls.value = "";
+      elBallWeight.value = "";
+      elHydration.value = "65";
+      elIntegralPct.value = "0";
+      elRounding.value = "0.1";
+      compute();
+    });
+
+    // --- iPhone style: avanzar automáticamente entre campos numéricos ---
+    // Al pulsar "Return"/"Next" en iOS: pasamos foco al siguiente input.
+    const flow = [elBalls, elBallWeight, elHydration, elIntegralPct];
+
+    function focusNext(current){
+      const i = flow.indexOf(current);
+      if (i >= 0 && i < flow.length - 1){
+        flow[i + 1].focus();
+        flow[i + 1].select?.();
+      } else {
+        current.blur();
+      }
+    }
+
+    // "Enter" en iOS dispara keydown con Enter (si hay teclado), y a veces form submit.
+    // Usamos keydown y, además, un fallback en "change" para cuando iOS use 'Done'.
+    for (const el of flow){
+      el.addEventListener("keydown", (e) => {
+        if (e.key === "Enter"){
+          e.preventDefault();
+          focusNext(el);
+        }
+      });
+
+      // En iOS, al pulsar "Next/Done" suele dispararse change/blur.
+      el.addEventListener("change", () => {
+        // Si el usuario acaba de confirmar este campo y no está vacío,
+        // saltamos al siguiente. (Si lo borró, no molestamos.)
+        if ((el.value ?? "").toString().trim() !== "") focusNext(el);
+      });
+    }
+
+    // Recalcular al vuelo
+    [elBalls, elBallWeight, elHydration, elIntegralPct, elRounding].forEach(el =>
+      el.addEventListener("input", compute)
+    );
+
+    compute();
+  </script>
+</body>
+</html>
