@@ -912,12 +912,45 @@
                   max="100"
                   step="0.1"
                   inputmode="decimal"
-                  enterkeyhint="done"
+                  enterkeyhint="next"
                   value="0"
                 >
 
                 <span class="unit">
                   %
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- YEAST PER KG -->
+
+          <div class="select-field">
+
+            <div class="field">
+
+              <label for="yeastPerKg">
+                Levadura seca por kg de harina
+              </label>
+
+              <div class="input-wrap">
+
+                <input
+                  id="yeastPerKg"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  inputmode="decimal"
+                  enterkeyhint="done"
+                  value="1.7"
+                >
+
+                <span class="unit">
+                  g/kg
                 </span>
 
               </div>
@@ -1094,7 +1127,7 @@
     const BASE_BALL = 297;
 
     const BASE_SALT = 5.5;
-    const BASE_YEAST = 1;
+    const DEFAULT_YEAST_PER_KG = 1.7;
 
 
     /* ====================================
@@ -1115,6 +1148,9 @@
 
     const integralPct =
       document.getElementById("integralPct");
+
+    const yeastPerKgInput =
+      document.getElementById("yeastPerKg");
 
     const rounding =
       document.getElementById("rounding");
@@ -1258,59 +1294,51 @@
         );
 
 
+      const yeastPerKg = yeastPerKgInput.value === ""
+        ? DEFAULT_YEAST_PER_KG
+        : Math.max(0, Number(yeastPerKgInput.value) || 0);
+
+
       const target =
         ballsValue * weightValue;
 
 
       /*
-       * Sal y levadura:
-       * dependen del peso total,
-       * NO de la hidratación.
+       * La sal conserva la proporción original
+       * respecto al peso final de masa.
        */
 
       const factor =
         target / BASE_BALL;
 
-
       const saltRaw =
         BASE_SALT * factor;
 
 
-      const yeastRaw =
-        BASE_YEAST * factor;
-
-
       /*
-       * Masa restante:
+       * La levadura seca se calcula por kg de HARINA:
+       * levadura = harina × (g/kg) / 1000
        *
-       * harina + agua
-       *
-       * agua = harina × hidratación
+       * Para conservar el peso objetivo:
+       * target = harina × (1 + hidratación + ratioLevadura) + sal
        */
 
-      const flourAndWater =
-        target -
-        saltRaw -
-        yeastRaw;
-
+      const yeastRatio =
+        yeastPerKg / 1000;
 
       const flourTotalRaw =
-        flourAndWater /
-        (1 + h / 100);
+        (target - saltRaw) /
+        (1 + h / 100 + yeastRatio);
 
-
-      if (
-        flourTotalRaw <= 0
-      ) {
-
+      if (!Number.isFinite(flourTotalRaw) || flourTotalRaw <= 0) {
         return null;
-
       }
 
-
       const waterRaw =
-        flourTotalRaw *
-        (h / 100);
+        flourTotalRaw * (h / 100);
+
+      const yeastRaw =
+        flourTotalRaw * yeastRatio;
 
 
       /*
@@ -1336,6 +1364,8 @@
         hydration: h,
 
         integralPct: integral,
+
+        yeastPerKg,
 
         target,
 
@@ -1540,7 +1570,7 @@
 
 
       addRow(
-        "Levadura",
+        "Levadura seca",
         recipe.yeast
       );
 
@@ -1584,6 +1614,13 @@
           Hidratación
           <strong>
             ${format(data.hydration)}%
+          </strong>
+        </span>
+
+        <span class="tag">
+          Levadura
+          <strong>
+            ${format(data.yeastPerKg)} g/kg
           </strong>
         </span>
 
@@ -1722,6 +1759,24 @@
     );
 
 
+    yeastPerKgInput.addEventListener(
+      "blur",
+      () => {
+
+        if (yeastPerKgInput.value === "" ||
+            !Number.isFinite(Number(yeastPerKgInput.value))) {
+          yeastPerKgInput.value = String(DEFAULT_YEAST_PER_KG);
+        } else {
+          yeastPerKgInput.value =
+            Math.max(0, Number(yeastPerKgInput.value));
+        }
+
+        render();
+
+      }
+    );
+
+
     /* ====================================
        FLUJO DEL TECLADO iPHONE
        ==================================== */
@@ -1731,7 +1786,8 @@
       balls,
       ballWeight,
       hydration,
-      integralPct
+      integralPct,
+      yeastPerKgInput
 
     ];
 
@@ -1827,6 +1883,7 @@
       ballWeight,
       hydration,
       integralPct,
+      yeastPerKgInput,
       rounding
 
     ].forEach(
@@ -1882,6 +1939,7 @@
           `Hidratación: ${format(data.hydration)}%`,
 
           `Harina integral: ${format(data.integralPct)}%`,
+          `Levadura seca: ${format(data.yeastPerKg)} g/kg de harina`,
 
           ""
 
@@ -1921,7 +1979,7 @@
 
 
         lines.push(
-          `Levadura: ${format(recipe.yeast)} g`
+          `Levadura seca: ${format(recipe.yeast)} g`
         );
 
 
@@ -2020,6 +2078,9 @@
 
         integralPct.value =
           "0";
+
+        yeastPerKgInput.value =
+          String(DEFAULT_YEAST_PER_KG);
 
         rounding.value =
           "0.1";
