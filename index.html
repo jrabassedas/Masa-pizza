@@ -10,289 +10,149 @@
   >
 
   <title>Masa pizza</title>
+<meta name="description" content="Calcula los ingredientes de tu masa de pizza.">
+<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+<link rel="shortcut icon" type="image/png" href="./icons/apple-touch-icon-180.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon-180.png">
 
   <!-- PWA -->
   <link rel="manifest" href="./manifest.webmanifest">
 
-  <meta name="theme-color" content="#10131a">
+  <meta name="theme-color" content="#f2dfbf">
 
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Masa pizza">
 
-  <link
-    rel="apple-touch-icon"
-    href="./icons/apple-touch-icon-180.png"
-  >
+  
 
   
   <style>
-    :root {
-      --bg:#0a0d12;--bg-2:#10141d;--card:rgba(20,26,37,.78);--card-2:rgba(17,22,31,.88);
-      --field:#0d121a;--field-focus:#111826;--text:#f5f7fb;--muted:#a8b2c4;--muted-2:#788396;
-      --line:rgba(255,255,255,.08);--line-strong:rgba(255,255,255,.14);--accent:#ff7a1a;
-      --accent-2:#ffb067;--accent-soft:rgba(255,122,26,.16);--green:#31d158;
-      --shadow:0 20px 50px rgba(0,0,0,.35);--radius-xl:26px;--radius-lg:18px;--radius-md:14px;
-    }
-    *{box-sizing:border-box}
-    html{background:var(--bg)}
-    body {
-      margin:0;min-height:100vh;
-      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-      color:var(--text);
-      background:radial-gradient(900px 520px at 0% -10%,rgba(90,167,255,.20),transparent 58%),
-                 radial-gradient(800px 520px at 100% 0%,rgba(255,122,26,.18),transparent 55%),
-                 linear-gradient(180deg,#0a0d12 0%,#0d1118 100%);
-      -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
-      padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);
-    }
-    button,input,select{font:inherit}
-    .app{
-      width:100%;max-width:1080px;margin:0 auto;
-      padding:24px max(16px,env(safe-area-inset-right)) 50px max(16px,env(safe-area-inset-left));
-    }
-    .hero{
-      position:relative;overflow:hidden;margin-bottom:16px;
-      border:1px solid var(--line);border-radius:32px;
-      background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.02)),rgba(16,20,29,.82);
-      box-shadow:var(--shadow);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);padding:22px;
-    }
-    .hero::after{
-      content:"";position:absolute;right:-120px;top:-120px;width:280px;height:280px;border-radius:50%;
-      background:radial-gradient(circle,rgba(255,122,26,.18),transparent 65%);pointer-events:none;
-    }
-    .hero-top{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap}
-    .brand{display:flex;align-items:flex-start;gap:16px;max-width:720px;position:relative;z-index:1}
-    .logo-shell{
-      flex:0 0 auto;width:68px;height:68px;border-radius:20px;display:grid;place-items:center;
-      background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02)),rgba(255,122,26,.09);
-      border:1px solid rgba(255,255,255,.1);box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
-    }
-    .brand-copy h1{
-      margin:2px 0 6px;font-size:clamp(28px,5vw,42px);line-height:1.02;font-weight:800;letter-spacing:-.8px;
-    }
-    .brand-copy p{margin:0;color:var(--muted);font-size:14px;line-height:1.55;max-width:640px}
-    .hero-badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-    .chip{
-      display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:7px 11px;border-radius:999px;
-      border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--muted);font-size:12px;white-space:nowrap;
-    }
-    .chip strong{color:var(--text);font-weight:650}
-    .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(49,209,88,.08)}
-    .layout{display:grid;grid-template-columns:1fr;gap:14px}
-    @media(min-width:900px){.layout{grid-template-columns:1.08fr .92fr;align-items:start}}
-    .card{
-      border-radius:var(--radius-xl);border:1px solid var(--line);
-      background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012)),var(--card);
-      box-shadow:var(--shadow);padding:18px;-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
-    }
-    .card-header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
-    .card-title{margin:0;font-size:17px;font-weight:720;letter-spacing:-.2px}
-    .status{color:var(--muted);font-size:12px}
-    .grid{display:grid;grid-template-columns:1fr;gap:12px}
-    @media(min-width:520px){.grid.two{grid-template-columns:1fr 1fr}}
-    .field{min-width:0}
-    .field label{display:block;margin:0 0 7px;color:var(--muted);font-size:13px;font-weight:550}
-    .input-wrap{position:relative;display:flex;align-items:center}
-    .input-wrap input,.select-wrap select{
-      width:100%;min-height:52px;border-radius:16px;border:1px solid var(--line);
-      background:var(--field);color:var(--text);outline:none;
-      transition:border-color .16s ease,box-shadow .16s ease,background .16s ease,transform .06s ease;
-      appearance:none;-webkit-appearance:none;
-    }
-    .input-wrap input{padding:0 50px 0 14px;font-size:17px;font-weight:580}
-    .select-wrap select{padding:0 44px 0 14px;font-size:15px;font-weight:530}
-    .input-wrap input::placeholder{color:var(--muted-2);font-weight:420}
-    .input-wrap input:focus,.select-wrap select:focus{
-      background:var(--field-focus);border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft);
-    }
-    input::-webkit-inner-spin-button,input::-webkit-outer-spin-button{appearance:none;-webkit-appearance:none;margin:0}
-    .unit{position:absolute;right:14px;color:var(--muted);font-size:13px;pointer-events:none}
-    .select-wrap{position:relative}
-    .select-wrap::after{
-      content:"⌄";position:absolute;right:14px;top:50%;transform:translateY(-50%);
-      color:var(--muted);font-size:16px;pointer-events:none;
-    }
-    .subsection{margin-top:14px;padding-top:8px;border-top:1px solid rgba(255,255,255,.04)}
-    .actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
-    button{
-      min-height:46px;padding:0 17px;border-radius:15px;border:none;cursor:pointer;
-      font-weight:680;font-size:14px;transition:transform .08s ease,opacity .15s ease,background .16s ease;
-      -webkit-tap-highlight-color:transparent;
-    }
-    button:active{transform:scale(.98)}
-    .primary{background:linear-gradient(180deg,#ff8b34,#ff6f0f);color:#fff;box-shadow:0 10px 24px rgba(255,122,26,.22)}
-    .secondary{background:rgba(255,255,255,.055);color:var(--text);border:1px solid var(--line)}
-    .summary{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-    .summary .chip{background:rgba(255,255,255,.035)}
-    .empty{
-      padding:18px;border-radius:18px;border:1px dashed var(--line-strong);
-      background:rgba(255,255,255,.012);color:var(--muted);font-size:13px;line-height:1.55;
-    }
-    .results{display:none}
-    .results-top{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:14px}
-    .stat{
-      border-radius:18px;border:1px solid var(--line);
-      background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));padding:14px 15px;
-    }
-    .stat-label{color:var(--muted);font-size:12px;margin-bottom:4px}
-    .stat-value{font-size:28px;font-weight:800;letter-spacing:-.8px;line-height:1}
-    table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
-    th{
-      padding:2px 4px 10px;text-align:left;color:var(--muted);font-size:11px;
-      font-weight:700;text-transform:uppercase;letter-spacing:.45px;
-    }
-    th:last-child{text-align:right}
-    td{padding:14px 4px;border-top:1px solid var(--line);font-size:15px}
-    td:last-child{text-align:right;font-size:16px;font-weight:700}
-    .ingredient-name{display:flex;align-items:center;gap:10px}
-    .ingredient-bullet{
-      width:8px;height:8px;border-radius:50%;background:linear-gradient(180deg,var(--accent-2),var(--accent));
-      flex:0 0 auto;opacity:.95;
-    }
-    .total-row td{padding-top:16px;color:var(--muted);font-size:13px}
-    .total-row td:last-child{color:var(--text);font-size:18px;font-weight:800}
-    .note{margin-top:12px;color:var(--muted);font-size:12px;line-height:1.5}
-    @media(max-width:560px){
-      .app{padding-top:18px}.hero{padding:18px;border-radius:28px}.brand{gap:14px}
-      .logo-shell{width:60px;height:60px;border-radius:18px}.card{padding:16px;border-radius:22px}
-      .actions button{flex:1}.grid.two{grid-template-columns:1fr 1fr}
-      .input-wrap input{font-size:18px}
-    }
-    @media(max-width:390px){.grid.two{grid-template-columns:1fr}}
-    @media(prefers-reduced-motion:reduce){*{transition:none!important}}
-  </style>
+:root{color-scheme:light;--cream:#fff6df;--paper:#f4e0bd;--brown:#4f3021;--muted:#85684e;--wine:#8d241d;--green:#286338;--border:#d8b991;--shadow:0 12px 30px #70422726}
+*{box-sizing:border-box}html{background:#f2dfbf}body{margin:0;min-height:100svh;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--brown);background:radial-gradient(at 2% 0%,#fff8e8,transparent 46%),radial-gradient(at 100% 0%,#d5a16e55,transparent 50%),repeating-linear-gradient(115deg,transparent 0 6px,#734c2605 6px 7px),#f2dfbf;-webkit-font-smoothing:antialiased;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+button,input,select{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.app{width:100%;max-width:1100px;margin:auto;padding:12px max(14px,env(safe-area-inset-right)) 30px max(14px,env(safe-area-inset-left))}
+.hero{position:relative;isolation:isolate;overflow:hidden;text-align:center;margin-bottom:14px;border:1px solid #bc8c62;border-radius:22px;background:radial-gradient(at 50% 20%,#fff8e5 5%,#f7e5c6 68%,#edc99a);box-shadow:var(--shadow);padding:44px 18px 22px}
+.hero:after,.card:after{position:absolute;inset:0;content:"";pointer-events:none;background-image:radial-gradient(#9264452c .65px,transparent .75px);background-size:8px 8px;opacity:.4;z-index:0}
+.awning{position:absolute;top:0;left:0;right:0;height:26px;background:repeating-linear-gradient(90deg,#a33227 0 35px,#fff4df 35px 70px,#377b44 70px 105px,#fff4df 105px 140px);border-bottom:3px solid #c29762;box-shadow:0 5px 9px #542c2330}
+.hero-body{position:relative;z-index:2;max-width:590px;margin:auto}
+.pizza-logo{display:block;width:92px;height:92px;margin:0 auto 0;filter:drop-shadow(0 6px 4px #8f522e5c)}
+.hero h1{margin:0;color:#94271f;font:italic 800 clamp(37px,6vw,65px)/1.08 Georgia,"Times New Roman",serif;letter-spacing:-1.8px;text-shadow:1px 2px 0 #fffcf1}
+.hero p{max-width:520px;margin:7px auto 0;font-size:clamp(13px,1.7vw,16px);line-height:1.45;color:#694831}
+.tricolour{width:130px;height:4px;margin:12px auto 0;border-radius:4px;background:linear-gradient(90deg,#368045 0 33%,#fffdf5 33% 67%,#aa3128 67%)}
+.oven{position:absolute;width:200px;height:170px;right:0;bottom:-17px;opacity:.86;z-index:1;pointer-events:none}
+.leaves{position:absolute;width:145px;height:154px;left:1px;top:33px;opacity:.55;z-index:1;pointer-events:none}
+.blackboard{position:absolute;top:50px;left:26px;transform:rotate(-6deg);background:#423125;color:#fff3d4;border:5px solid #ac7249;padding:7px 13px;box-shadow:0 4px 9px #5f382a3b;font:italic 16px Georgia,serif;z-index:2}
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}@media(min-width:940px){.layout{grid-template-columns:1.04fr .96fr;align-items:start}.hero{padding:40px 18px 22px}.oven{right:35px}}
+.card{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(135deg,#fffbefef,#ffefd3f5);border:1px solid #d9b791;border-radius:22px;box-shadow:var(--shadow);padding:19px}
+.card>*{position:relative;z-index:1}.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid #bb8e603c;padding-bottom:10px;margin-bottom:6px}
+.section-title{font:700 clamp(22px,3vw,29px) Georgia,serif;color:var(--wine);margin:0}.status{font-size:12px;color:#946d4d;text-align:right}
+.field-row{min-height:67px;display:grid;grid-template-columns:38px minmax(0,1fr) minmax(98px,132px);align-items:center;gap:10px;border-bottom:1px solid #bd90572b;padding:9px 0}
+.field-row:last-child{border:0}.field-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:11px;background:#ecd4ad80;font-size:21px}
+.field-row label{font:600 clamp(14px,1.5vw,16px)/1.25 Georgia,"Times New Roman",serif}
+.input-wrap,.select-wrap{position:relative;min-width:0}
+.input-wrap input,.select-wrap select{width:100%;height:44px;display:block;background:#fffaf0;border:1px solid #cfa981;border-radius:11px;outline:none;color:#3e2b1e;appearance:none;-webkit-appearance:none;font-size:17px;font-weight:650;font-variant-numeric:tabular-nums;transition:border-color .14s,box-shadow .14s}
+.input-wrap input{padding:0 37px 0 12px}.select-wrap select{padding:0 30px 0 12px;font-size:15px}
+.input-wrap input:focus,.select-wrap select:focus{border-color:#9e3927;box-shadow:0 0 0 3px #af47262a}
+.input-wrap input::placeholder{color:#b29c83;font-weight:400}
+input::-webkit-inner-spin-button,input::-webkit-outer-spin-button{-webkit-appearance:none;appearance:none;margin:0}
+.unit{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-size:11px;color:#82664c;pointer-events:none}
+.select-wrap:after{content:"⌄";position:absolute;right:11px;top:7px;line-height:1;font-size:22px;color:#377b43;pointer-events:none}
+.actions{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,.85fr);gap:10px;margin-top:15px}
+.actions button{height:49px;border-radius:13px;font-weight:730;font-size:14px;transition:transform .12s}.actions button:active{transform:scale(.98)}
+.primary{background:linear-gradient(180deg,#498449,#2d6636);color:#fff7e9;border:1px solid #2b6735;box-shadow:0 4px 10px #2d633a36}
+.secondary{background:#fff9ea;border:1.5px solid #a33b2f;color:#9a2b23}
+.summary{display:flex;gap:6px;flex-wrap:wrap;margin-top:13px}.chip{display:inline-flex;align-items:center;gap:4px;padding:6px 10px;border:1px solid #b48a583e;border-radius:99px;background:#eee0bf78;color:#765639;font-size:12px}.chip strong{color:#462c1d}
+.empty{text-align:center;background:#fff7e5;border:1px dashed #c8a27a;border-radius:14px;padding:26px 17px;line-height:1.55;color:#846149;font-size:14px}
+.empty-icon{display:block;font-size:42px;margin-bottom:10px}.results{display:none}
+.stat{display:grid;grid-template-columns:70px minmax(0,1fr) auto;align-items:center;gap:12px;border-radius:16px;padding:13px;color:#fff7df;background:linear-gradient(120deg,#b1392a,#8f231c 57%,#751c19);border:1px solid #91281e;box-shadow:0 8px 15px #8c332d29;margin-bottom:13px}
+.dough-svg{width:68px;height:57px}.stat-label{font-size:12px;color:#fff3e0;font-weight:650;line-height:1.3}
+.stat-value{border-radius:11px;color:#7a2018;font:750 clamp(22px,3vw,32px) Georgia,serif;background:#ffebcb;padding:9px 12px;white-space:nowrap;box-shadow:0 3px 0 #57201e4d;font-variant-numeric:tabular-nums}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th{text-align:left;color:#977458;letter-spacing:.4px;text-transform:uppercase;font-size:11px;padding:9px 6px}th:last-child{text-align:right}
+td{border-top:1px solid #bd90572b;padding:10px 6px;font-size:15px}td:last-child{text-align:right;white-space:nowrap;font-weight:720;font-size:16px}
+.ingredient-name{display:flex;align-items:center;gap:9px}.ingredient-icon{display:grid;place-items:center;background:#f3deb6;border-radius:9px;width:32px;height:32px;font-size:19px;flex:0 0 auto}
+.total-row td{background:#e6eccd;color:#286337;border:0;font-weight:750}.total-row td:first-child{padding-left:12px;border-radius:11px 0 0 11px}.total-row td:last-child{padding-right:12px;border-radius:0 11px 11px 0;color:#286337;font-size:18px}
+.note{font-size:12px;line-height:1.5;color:#947358;margin-top:11px}
+.footer{text-align:center;color:#617840;font:italic 16px Georgia,serif;margin:16px 0 0}.footer:before,.footer:after{content:"";display:inline-block;vertical-align:middle;width:50px;height:2px;margin:0 12px;background:linear-gradient(90deg,#42834b 50%,#a93629 50%)}
+@media(max-width:640px){.app{padding-top:9px}.hero{border-radius:18px;padding:40px 10px 19px}.pizza-logo{width:79px;height:79px}.hero h1{font-size:clamp(35px,9vw,49px)}.hero p{font-size:13px}.blackboard{display:none}.oven{width:105px;height:90px;opacity:.3;bottom:-15px;right:-20px}.leaves{width:75px;height:91px;left:-10px;opacity:.25}.card{padding:14px;border-radius:18px}.field-row{grid-template-columns:32px minmax(0,1fr) minmax(87px,112px);gap:7px;min-height:63px}.field-icon{width:31px;height:31px;font-size:19px}.field-row label{font-size:14px}.input-wrap input{padding-left:8px;padding-right:29px;font-size:16px}.select-wrap select{padding-left:8px;font-size:15px}.unit{right:7px}.actions button{font-size:13px;padding:0 7px}.stat{grid-template-columns:55px minmax(0,1fr) auto;gap:8px;padding:10px}.dough-svg{width:54px;height:48px}.stat-value{font-size:23px;padding:8px}.stat-label{font-size:11px}}
+@media(max-width:350px){.field-row{grid-template-columns:26px minmax(0,1fr) 82px;gap:5px}.field-icon{width:26px;height:26px;font-size:16px}.field-row label{font-size:13px}.dough-svg{display:none}.stat{grid-template-columns:minmax(0,1fr) auto}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
 </head>
 
 
 <body>
 
   
-  <main class="app">
-    <section class="hero">
-      <div class="hero-top">
-        <div class="brand">
-          <div class="logo-shell" aria-hidden="true">
-            <svg width="40" height="40" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 18C22 11 42 11 54 18L32 54L10 18Z" fill="#F6C26B"/>
-              <path d="M10 18C22 11 42 11 54 18" stroke="#C67D2A" stroke-width="3.2" stroke-linecap="round"/>
-              <path d="M18 21C27 17 37 17 46 21" stroke="#E89F3D" stroke-width="5" stroke-linecap="round"/>
-              <circle cx="23" cy="28" r="4.4" fill="#D64545"/>
-              <circle cx="38.5" cy="29.5" r="4.4" fill="#D64545"/>
-              <circle cx="31.5" cy="38" r="4" fill="#D64545"/>
-              <path d="M28 23C29.8 25 31.2 27 31.5 29.6" stroke="#5FAE4E" stroke-width="2.4" stroke-linecap="round"/>
-              <path d="M41 23.5C39.5 25.3 38.8 26.7 38.5 28.8" stroke="#5FAE4E" stroke-width="2.4" stroke-linecap="round"/>
-              <path d="M26.5 37C27.8 35.8 29 35.2 30.8 34.8" stroke="#5FAE4E" stroke-width="2.4" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div class="brand-copy">
-            <h1>Masa pizza</h1>
-            <p>Calcula tu masa de pizza de forma rápida y precisa: número de bolas, gramos por bola, hidratación, porcentaje de harina integral y levadura seca por kg de harina.</p>
-            <div class="hero-badges">
-              <span class="chip"><span class="dot"></span><strong>Referencia:</strong> 297 g</span>
-              <span class="chip"><strong>Hidratación inicial:</strong> 65 %</span>
-              <span class="chip"><strong>Levadura inicial:</strong> 1,7 g/kg</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="layout">
-      <section class="card">
-        <div class="card-header">
-          <h2 class="card-title">Configuración</h2>
-          <span class="status">Introduce los datos</span>
-        </div>
-        <form id="pizzaForm" autocomplete="off">
-          <div class="grid two">
-            <div class="field">
-              <label for="balls">Número de bolas</label>
-              <div class="input-wrap">
-                <input id="balls" type="number" min="1" step="1" inputmode="numeric" enterkeyhint="next" placeholder="4">
-                <span class="unit">uds.</span>
-              </div>
-            </div>
-            <div class="field">
-              <label for="ballWeight">Gramos por bola</label>
-              <div class="input-wrap">
-                <input id="ballWeight" type="number" min="1" step="0.1" inputmode="decimal" enterkeyhint="next" placeholder="300">
-                <span class="unit">g</span>
-              </div>
-            </div>
-            <div class="field">
-              <label for="hydration">Hidratación</label>
-              <div class="input-wrap">
-                <input id="hydration" type="number" min="0" max="100" step="0.1" inputmode="decimal" enterkeyhint="next" value="65">
-                <span class="unit">%</span>
-              </div>
-            </div>
-            <div class="field">
-              <label for="integralPct">% harina integral</label>
-              <div class="input-wrap">
-                <input id="integralPct" type="number" min="0" max="100" step="0.1" inputmode="decimal" enterkeyhint="next" value="0">
-                <span class="unit">%</span>
-              </div>
-            </div>
-          </div>
-          <div class="subsection grid two">
-            <div class="field">
-              <label for="yeastPerKg">Levadura seca por kg de harina</label>
-              <div class="input-wrap">
-                <input id="yeastPerKg" type="number" min="0" step="0.01" inputmode="decimal" enterkeyhint="done" value="1.7">
-                <span class="unit">g/kg</span>
-              </div>
-            </div>
-            <div class="field">
-              <label for="rounding">Precisión</label>
-              <div class="select-wrap">
-                <select id="rounding">
-                  <option value="0">Máxima</option>
-                  <option value="0.1" selected>0,1 g</option>
-                  <option value="0.5">0,5 g</option>
-                  <option value="1">1 g</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="actions">
-            <button type="button" class="primary" id="copyBtn">Copiar ingredientes</button>
-            <button type="button" class="secondary" id="resetBtn">Limpiar</button>
-          </div>
-          <div class="summary" id="summary"></div>
-        </form>
-      </section>
-
-      <section class="card">
-        <div class="card-header">
-          <h2 class="card-title">Resultado</h2>
-          <span class="status" id="status">Introduce los datos</span>
-        </div>
-        <div id="empty" class="empty">
-          Introduce el <strong>número de bolas</strong> y los <strong>gramos por bola</strong>.
-          Los ingredientes aparecerán aquí automáticamente.
-        </div>
-        <div id="results" class="results">
-          <div class="results-top">
-            <div class="stat">
-              <div class="stat-label">Total de masa</div>
-              <div class="stat-value" id="total">—</div>
-            </div>
-          </div>
-          <table>
-            <thead>
-              <tr><th>Ingrediente</th><th>Cantidad</th></tr>
-            </thead>
-            <tbody id="tbody"></tbody>
-            <tfoot>
-              <tr class="total-row"><td>Total ajustado</td><td id="totalFooter">—</td></tr>
-            </tfoot>
-          </table>
-          <div class="note">La suma de los ingredientes se ajusta para coincidir con el peso final después del redondeo seleccionado.</div>
-        </div>
-      </section>
-    </section>
-  </main>
+  
+<main class="app">
+<header class="hero">
+<div class="awning" aria-hidden="true"></div>
+<div class="blackboard" aria-hidden="true">Pizzeria<br>Italiana</div>
+<svg class="leaves" aria-hidden="true" viewBox="0 0 150 170">
+ <path d="M15 7Q75 65 84 167" stroke="#527339" stroke-width="4" fill="none"/>
+ <g fill="#6d8c49" stroke="#365b30" stroke-width="1.5"><path d="M19 25Q43 2 65 31Q55 57 19 25Z"/><path d="M35 66Q57 40 84 64Q76 96 35 66Z"/><path d="M48 107Q74 86 99 108Q86 139 48 107Z"/><path d="M9 59Q-4 31 19 18Q43 43 9 59Z"/></g>
+</svg>
+<svg class="oven" aria-hidden="true" viewBox="0 0 200 170">
+ <path d="M18 167V84Q18 5 103 5Q188 5 188 84V167Z" fill="#BA7951" stroke="#78402C" stroke-width="6"/>
+ <path d="M41 165V85Q41 27 103 27Q162 27 164 85V165Z" fill="#D9A06E"/>
+ <path d="M58 165V93Q58 48 105 47Q150 48 150 93V165Z" fill="#37201A"/>
+ <path d="M76 164Q66 143 95 111Q94 133 108 136Q119 115 121 112Q148 153 124 164Z" fill="#F99A2D"/>
+ <path d="M90 164Q91 146 107 134Q121 151 114 164Z" fill="#FFE17C"/>
+ <path d="M19 85H187M40 56H165M61 27H149" stroke="#955739" stroke-width="3"/>
+ <path d="M70 8V27M117 5V27M68 28V56M118 28V56M86 57V83M139 57V84" stroke="#955739" stroke-width="3"/>
+</svg>
+<div class="hero-body">
+<svg class="pizza-logo" viewBox="0 0 110 110" role="img" aria-label="Logo de pizza">
+<circle cx="55" cy="55" r="49" fill="#C47B32" stroke="#8D431E" stroke-width="3"/>
+<circle cx="55" cy="55" r="43" fill="#F3B568" stroke="#FFE5AA" stroke-width="4"/>
+<circle cx="55" cy="55" r="37" fill="#C53522"/>
+<g fill="#FCF5D6" stroke="#F0DEB3" stroke-width="2"><circle cx="41" cy="32" r="10"/><circle cx="76" cy="43" r="9"/><circle cx="37" cy="72" r="11"/><circle cx="74" cy="76" r="8"/></g>
+<g fill="#328040" stroke="#226032"><path d="M49 56Q56 39 69 49Q68 63 49 56Z"/><path d="M49 57Q35 48 30 61Q42 70 49 57Z"/><path d="M62 69Q77 55 82 69Q75 81 62 69Z"/></g>
+<path d="M49 57L68 49M62 70L78 66" stroke="#174A24" stroke-width="2"/>
+</svg>
+<h1>Masa pizza</h1>
+<p>Calcula fácilmente los ingredientes de tu masa de pizza, con las proporciones exactas para cada bola.</p>
+<div class="tricolour" aria-hidden="true"></div>
+</div>
+</header>
+<section class="layout" aria-label="Calculadora de masa">
+<section class="card" aria-labelledby="config-title">
+<div class="section-head"><h2 id="config-title" class="section-title">La tua ricetta</h2><span class="status">Configura tu masa</span></div>
+<form id="pizzaForm" autocomplete="off">
+<div class="form-list">
+<div class="field-row"><span class="field-icon" aria-hidden="true">🍞</span><label for="balls">Número de bolas</label><div class="input-wrap"><input id="balls" type="number" min="1" step="1" inputmode="numeric" enterkeyhint="next" placeholder="4"><span class="unit">uds.</span></div></div>
+<div class="field-row"><span class="field-icon" aria-hidden="true">⚖️</span><label for="ballWeight">Gramos por bola</label><div class="input-wrap"><input id="ballWeight" type="number" min="1" step="0.1" inputmode="decimal" enterkeyhint="next" placeholder="300"><span class="unit">g</span></div></div>
+<div class="field-row"><span class="field-icon" aria-hidden="true">💧</span><label for="hydration">Hidratación</label><div class="input-wrap"><input id="hydration" type="number" min="0" max="100" step="0.1" inputmode="decimal" enterkeyhint="next" value="65"><span class="unit">%</span></div></div>
+<div class="field-row"><span class="field-icon" aria-hidden="true">🌾</span><label for="integralPct">% harina integral</label><div class="input-wrap"><input id="integralPct" type="number" min="0" max="100" step="0.1" inputmode="decimal" enterkeyhint="next" value="0"><span class="unit">%</span></div></div>
+<div class="field-row"><span class="field-icon" aria-hidden="true">🥣</span><label for="yeastPerKg">Levadura seca por kg de harina</label><div class="input-wrap"><input id="yeastPerKg" type="number" min="0" step="0.01" inputmode="decimal" enterkeyhint="done" value="1.7"><span class="unit">g/kg</span></div></div>
+<div class="field-row"><span class="field-icon" aria-hidden="true">🎯</span><label for="rounding">Precisión</label><div class="select-wrap"><select id="rounding"><option value="0">Máxima</option><option value="0.1" selected>0,1 g</option><option value="0.5">0,5 g</option><option value="1">1 g</option></select></div></div>
+</div>
+<div class="actions"><button type="button" class="primary" id="copyBtn">▤ Copiar ingredientes</button><button type="button" class="secondary" id="resetBtn">↺ Limpiar</button></div>
+<div class="summary" id="summary" aria-live="polite"></div>
+</form>
+</section>
+<section class="card" aria-labelledby="result-title">
+<div class="section-head"><h2 id="result-title" class="section-title">Resultado</h2><span class="status" id="status">Introduce los datos</span></div>
+<div id="empty" class="empty"><span class="empty-icon" aria-hidden="true">🍕</span>Introduce el <strong>número de bolas</strong> y los <strong>gramos por bola</strong>. Los ingredientes aparecerán aquí automáticamente.</div>
+<div class="results" id="results" aria-live="polite">
+<div class="stat">
+<svg class="dough-svg" viewBox="0 0 100 82" aria-hidden="true"><ellipse cx="51" cy="74" rx="46" ry="7" fill="#63241B" opacity=".35"/><path d="M10 69Q7 39 31 23Q55 8 79 28Q96 40 94 69Q63 80 10 69Z" fill="#EED7AA"/><path d="M20 65Q23 37 44 30Q69 24 85 63" fill="none" stroke="#FFF0CC" stroke-width="5" stroke-linecap="round"/><path d="M29 45L37 38M65 34L70 39M54 60L59 56" stroke="#C0A57A" stroke-width="2"/></svg>
+<div class="stat-label">Masa total<br>de la receta</div>
+<div id="total" class="stat-value">—</div>
+</div>
+<table>
+<thead><tr><th>Ingrediente</th><th>Cantidad</th></tr></thead>
+<tbody id="tbody"></tbody>
+<tfoot><tr class="total-row"><td>Total ajustado</td><td id="totalFooter">—</td></tr></tfoot>
+</table>
+<p class="note">Los ingredientes se ajustan al peso total. El agua absorbe las pequeñas diferencias de redondeo.</p>
+</div>
+</section>
+</section>
+<div class="footer" aria-hidden="true">Fatto con passione</div>
+</main>
 
 
 
@@ -825,54 +685,31 @@
     }
 
 
-    function addRow(
-      name,
-      grams
-    ) {
-
-      const row =
-        document.createElement("tr");
-
-
-      const ingredient =
-        document.createElement("td");
-
-
-      const quantity =
-        document.createElement("td");
-
-
-      const ingredientWrap = document.createElement("div");
-      ingredientWrap.className = "ingredient-name";
-      const bullet = document.createElement("span");
-      bullet.className = "ingredient-bullet";
-      bullet.setAttribute("aria-hidden", "true");
-      const ingredientText = document.createElement("span");
-      ingredientText.textContent = name;
-      ingredientWrap.append(bullet, ingredientText);
-      ingredient.appendChild(ingredientWrap);
-
-
-      quantity.textContent =
-        `${format(grams)} g`;
-
-
-      row.appendChild(
-        ingredient
-      );
-
-
-      row.appendChild(
-        quantity
-      );
-
-
-      tbody.appendChild(
-        row
-      );
-
+    function addRow(name, grams) {
+      const icons = {
+        "Harina normal": "🌾",
+        "Harina integral": "🌿",
+        "Agua": "💧",
+        "Sal": "🧂",
+        "Levadura seca": "🥣"
+      };
+      const tr = document.createElement("tr");
+      const tdName = document.createElement("td");
+      const tdValue = document.createElement("td");
+      const wrapper = document.createElement("div");
+      wrapper.className = "ingredient-name";
+      const icon = document.createElement("span");
+      icon.className = "ingredient-icon";
+      icon.setAttribute("aria-hidden","true");
+      icon.textContent = icons[name] || "•";
+      const label = document.createElement("span");
+      label.textContent = name;
+      wrapper.append(icon,label);
+      tdName.appendChild(wrapper);
+      tdValue.textContent = format(grams) + " g";
+      tr.append(tdName,tdValue);
+      tbody.appendChild(tr);
     }
-
 
     /* ====================================
        VALIDACIÓN PORCENTAJES
