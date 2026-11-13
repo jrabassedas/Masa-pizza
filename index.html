@@ -157,18 +157,6 @@ table{padding:4px 8px 10px}td{font-size:clamp(14px,4vw,18px);padding:8px 2px}
 @media(max-width:350px){.field-row{grid-template-columns:30px minmax(0,1fr) 87px;gap:4px}.field-illustration svg{width:29px}.unit{display:none}.input-wrap input{padding-right:25px}.stat-value{font-size:19px}}
 
 
-/* Fotografía integrada en un emblema de estilo pizzería italiana */
-.pizza-photo-badge{
-  display:grid;place-items:center;position:relative;z-index:4;
-  width:124px;height:124px;margin:-18px auto -5px;padding:6px;
-  background:linear-gradient(145deg,#fae6bc,#bd823f 60%,#efcf92);
-  border:2px solid #fff4d4;border-radius:50%;
-  box-shadow:0 4px 0 #8d4d2873,0 9px 18px #5b321d59,inset 0 2px 3px #fffcebbd;
-}
-.pizza-photo-badge:after{content:"";position:absolute;inset:4px;border:1px solid #fff0c4a8;border-radius:50%;pointer-events:none}
-.pizza-photo{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%;
-  filter:sepia(.065) saturate(1.1) contrast(1.04);background:#1a100d}
-@media(max-width:630px){.pizza-photo-badge{width:91px;height:91px;padding:4px;margin:-10px auto -1px}}
 </style>
 </head>
 
@@ -195,7 +183,14 @@ table{padding:4px 8px 10px}td{font-size:clamp(14px,4vw,18px);padding:8px 2px}
  <path d="M70 8V27M117 5V27M68 28V56M118 28V56M86 57V83M139 57V84" stroke="#955739" stroke-width="3"/>
 </svg>
 <div class="hero-body">
-<div class="pizza-photo-badge"><img class="pizza-photo" src="./images/pizza-real.webp" alt="Pizza napolitana" width="124" height="124" fetchpriority="high" decoding="async"></div>
+<svg class="pizza-logo" viewBox="0 0 110 110" role="img" aria-label="Logo de pizza">
+<circle cx="55" cy="55" r="49" fill="#C47B32" stroke="#8D431E" stroke-width="3"/>
+<circle cx="55" cy="55" r="43" fill="#F3B568" stroke="#FFE5AA" stroke-width="4"/>
+<circle cx="55" cy="55" r="37" fill="#C53522"/>
+<g fill="#FCF5D6" stroke="#F0DEB3" stroke-width="2"><circle cx="41" cy="32" r="10"/><circle cx="76" cy="43" r="9"/><circle cx="37" cy="72" r="11"/><circle cx="74" cy="76" r="8"/></g>
+<g fill="#328040" stroke="#226032"><path d="M49 56Q56 39 69 49Q68 63 49 56Z"/><path d="M49 57Q35 48 30 61Q42 70 49 57Z"/><path d="M62 69Q77 55 82 69Q75 81 62 69Z"/></g>
+<path d="M49 57L68 49M62 70L78 66" stroke="#174A24" stroke-width="2"/>
+</svg>
 <h1>Masa pizza</h1>
 <p>Calcula fácilmente los ingredientes de tu masa de pizza, con las proporciones exactas para cada bola.</p>
 <div class="tricolour" aria-hidden="true"></div>
