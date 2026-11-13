@@ -156,6 +156,19 @@ table{padding:4px 8px 10px}td{font-size:clamp(14px,4vw,18px);padding:8px 2px}
 }
 @media(max-width:350px){.field-row{grid-template-columns:30px minmax(0,1fr) 87px;gap:4px}.field-illustration svg{width:29px}.unit{display:none}.input-wrap input{padding-right:25px}.stat-value{font-size:19px}}
 
+
+/* Fotografía integrada en un emblema de estilo pizzería italiana */
+.pizza-photo-badge{
+  display:grid;place-items:center;position:relative;z-index:4;
+  width:124px;height:124px;margin:-18px auto -5px;padding:6px;
+  background:linear-gradient(145deg,#fae6bc,#bd823f 60%,#efcf92);
+  border:2px solid #fff4d4;border-radius:50%;
+  box-shadow:0 4px 0 #8d4d2873,0 9px 18px #5b321d59,inset 0 2px 3px #fffcebbd;
+}
+.pizza-photo-badge:after{content:"";position:absolute;inset:4px;border:1px solid #fff0c4a8;border-radius:50%;pointer-events:none}
+.pizza-photo{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%;
+  filter:sepia(.065) saturate(1.1) contrast(1.04);background:#1a100d}
+@media(max-width:630px){.pizza-photo-badge{width:91px;height:91px;padding:4px;margin:-10px auto -1px}}
 </style>
 </head>
 
@@ -182,14 +195,7 @@ table{padding:4px 8px 10px}td{font-size:clamp(14px,4vw,18px);padding:8px 2px}
  <path d="M70 8V27M117 5V27M68 28V56M118 28V56M86 57V83M139 57V84" stroke="#955739" stroke-width="3"/>
 </svg>
 <div class="hero-body">
-<svg class="pizza-logo" viewBox="0 0 110 110" role="img" aria-label="Logo de pizza">
-<circle cx="55" cy="55" r="49" fill="#C47B32" stroke="#8D431E" stroke-width="3"/>
-<circle cx="55" cy="55" r="43" fill="#F3B568" stroke="#FFE5AA" stroke-width="4"/>
-<circle cx="55" cy="55" r="37" fill="#C53522"/>
-<g fill="#FCF5D6" stroke="#F0DEB3" stroke-width="2"><circle cx="41" cy="32" r="10"/><circle cx="76" cy="43" r="9"/><circle cx="37" cy="72" r="11"/><circle cx="74" cy="76" r="8"/></g>
-<g fill="#328040" stroke="#226032"><path d="M49 56Q56 39 69 49Q68 63 49 56Z"/><path d="M49 57Q35 48 30 61Q42 70 49 57Z"/><path d="M62 69Q77 55 82 69Q75 81 62 69Z"/></g>
-<path d="M49 57L68 49M62 70L78 66" stroke="#174A24" stroke-width="2"/>
-</svg>
+<div class="pizza-photo-badge"><img class="pizza-photo" src="./images/pizza-real.webp" alt="Pizza napolitana" width="124" height="124" fetchpriority="high" decoding="async"></div>
 <h1>Masa pizza</h1>
 <p>Calcula fácilmente los ingredientes de tu masa de pizza, con las proporciones exactas para cada bola.</p>
 <div class="tricolour" aria-hidden="true"></div>
@@ -765,12 +771,12 @@ table{padding:4px 8px 10px}td{font-size:clamp(14px,4vw,18px);padding:8px 2px}
 
     function addRow(name, grams) {
   const icons={
-    "Harina normal":"<svg viewBox=\"0 0 64 56\"><path d=\"M8 54L55 5\" stroke=\"#976a2d\" stroke-width=\"2\"/><g stroke=\"#ae6c22\" stroke-width=\"1.5\" fill=\"#e5ac48\"><path d=\"M29 32Q14 30 14 20Q29 20 29 32Z\"/><path d=\"M38 22Q23 20 23 9Q37 10 38 22Z\"/><path d=\"M30 34Q44 28 49 17Q36 14 30 34Z\"/><path d=\"M20 43Q35 41 40 30Q27 26 20 43Z\"/></g></svg>",
-    "Harina integral":"<svg viewBox=\"0 0 64 56\"><path d=\"M8 54L55 5\" stroke=\"#976a2d\" stroke-width=\"2\"/><g stroke=\"#ae6c22\" stroke-width=\"1.5\" fill=\"#e5ac48\"><path d=\"M29 32Q14 30 14 20Q29 20 29 32Z\"/><path d=\"M38 22Q23 20 23 9Q37 10 38 22Z\"/><path d=\"M30 34Q44 28 49 17Q36 14 30 34Z\"/><path d=\"M20 43Q35 41 40 30Q27 26 20 43Z\"/></g></svg>",
-    "Agua":"<svg viewBox=\"0 0 64 56\"><defs><linearGradient id=\"waterg\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\"><stop stop-color=\"#d9f8ff\"/><stop offset=\".5\" stop-color=\"#6abccd\"/><stop offset=\"1\" stop-color=\"#29738d\"/></linearGradient></defs><path d=\"M32 3Q16 26 16 38A16 16 0 0 0 48 38Q48 25 32 3Z\" fill=\"url(#waterg)\" stroke=\"#367e91\" stroke-width=\"2\"/><path d=\"M27 18Q19 31 24 42\" stroke=\"#efffff\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/></svg>",
-    "Sal":"<svg viewBox=\"0 0 64 56\"><ellipse cx=\"32\" cy=\"47\" rx=\"26\" ry=\"5\" fill=\"#b78650\" opacity=\".3\"/><path d=\"M7 32Q32 25 57 32L50 47Q32 52 14 47Z\" fill=\"#9e622f\" stroke=\"#784322\" stroke-width=\"2\"/><ellipse cx=\"32\" cy=\"32\" rx=\"25\" ry=\"8\" fill=\"#d0a675\"/><path d=\"M12 30Q32 8 52 30Z\" fill=\"#e7c79c\"/><g fill=\"#b08a5e\"><circle cx=\"23\" cy=\"26\" r=\"1.4\"/><circle cx=\"34\" cy=\"22\" r=\"1.4\"/><circle cx=\"41\" cy=\"26\" r=\"1.5\"/></g></svg>",
-    "Levadura seca":"<svg viewBox=\"0 0 64 56\"><ellipse cx=\"32\" cy=\"47\" rx=\"26\" ry=\"5\" fill=\"#b78650\" opacity=\".3\"/><path d=\"M7 32Q32 25 57 32L50 47Q32 52 14 47Z\" fill=\"#9e622f\" stroke=\"#784322\" stroke-width=\"2\"/><ellipse cx=\"32\" cy=\"32\" rx=\"25\" ry=\"8\" fill=\"#d0a675\"/><path d=\"M12 30Q32 8 52 30Z\" fill=\"#e7c79c\"/><g fill=\"#b08a5e\"><circle cx=\"23\" cy=\"26\" r=\"1.4\"/><circle cx=\"34\" cy=\"22\" r=\"1.4\"/><circle cx=\"41\" cy=\"26\" r=\"1.5\"/></g></svg>"
-  };
+  "Harina normal": "<svg viewBox=\"0 0 64 56\"><path d=\"M8 54L55 5\" stroke=\"#95632A\" stroke-width=\"2.5\" stroke-linecap=\"round\"/><g fill=\"#E6B34C\" stroke=\"#A6712A\" stroke-width=\"1.4\"><path d=\"M27 33Q13 31 13 20Q28 19 27 33Z\"/><path d=\"M38 22Q22 20 22 9Q37 10 38 22Z\"/><path d=\"M29 34Q44 28 50 17Q36 14 29 34Z\"/><path d=\"M20 44Q35 41 40 29Q27 28 20 44Z\"/></g></svg>",
+  "Harina integral": "<svg viewBox=\"0 0 64 56\"><ellipse cx=\"31\" cy=\"49\" rx=\"26\" ry=\"5\" fill=\"#9A6A3B\" opacity=\".2\"/><path d=\"M18 13Q32 7 47 13L50 43Q47 51 31 51Q17 50 14 43Z\" fill=\"#9D724A\" stroke=\"#6B482D\" stroke-width=\"2\"/><path d=\"M18 14Q31 20 47 14\" stroke=\"#E5C393\" stroke-width=\"3\" fill=\"none\"/><path d=\"M22 30Q29 25 36 29Q30 41 22 30Z\" fill=\"#508A45\" stroke=\"#336438\" stroke-width=\"1.5\"/><path d=\"M31 41L42 22\" stroke=\"#E9CE95\" stroke-width=\"2.3\" stroke-linecap=\"round\"/><g fill=\"#D7AA58\" stroke=\"#825625\" stroke-width=\"1.1\"><path d=\"M35 26Q27 24 29 20Q36 20 35 26Z\"/><path d=\"M39 20Q33 17 36 13Q43 17 39 20Z\"/><path d=\"M36 29Q44 26 45 21Q38 21 36 29Z\"/></g><path d=\"M18 41Q30 44 47 41\" stroke=\"#C79C66\" stroke-width=\"2\" fill=\"none\"/></svg>",
+  "Agua": "<svg viewBox=\"0 0 64 56\"><defs><linearGradient id=\"waterIngredient\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\"><stop stop-color=\"#D9F8FF\"/><stop offset=\".5\" stop-color=\"#6ABCCD\"/><stop offset=\"1\" stop-color=\"#29738D\"/></linearGradient></defs><path d=\"M32 3Q16 26 16 38A16 16 0 0 0 48 38Q48 25 32 3Z\" fill=\"url(#waterIngredient)\" stroke=\"#367E91\" stroke-width=\"2\"/><path d=\"M27 18Q19 31 24 42\" stroke=\"#EFFFFF\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/></svg>",
+  "Sal": "<svg viewBox=\"0 0 64 56\"><ellipse cx=\"34\" cy=\"50\" rx=\"25\" ry=\"4\" fill=\"#927E68\" opacity=\".22\"/><rect x=\"20\" y=\"15\" width=\"24\" height=\"31\" rx=\"7\" fill=\"#F6F2E8\" stroke=\"#AFA18E\" stroke-width=\"2\"/><rect x=\"22\" y=\"10\" width=\"20\" height=\"9\" rx=\"3\" fill=\"#CFD0CA\" stroke=\"#8C9796\" stroke-width=\"1.7\"/><path d=\"M25 10Q32 7 39 10\" stroke=\"#F8F8F2\" stroke-width=\"2\" fill=\"none\"/><circle cx=\"27\" cy=\"14\" r=\"1.5\" fill=\"#807C74\"/><circle cx=\"32\" cy=\"14\" r=\"1.5\" fill=\"#807C74\"/><circle cx=\"37\" cy=\"14\" r=\"1.5\" fill=\"#807C74\"/><path d=\"M24 39Q32 33 40 39\" stroke=\"#D2C8B9\" stroke-width=\"2\" fill=\"none\"/><path d=\"M26 28L29 25L32 29L35 25L39 29\" stroke=\"#FFFFFF\" stroke-width=\"2\" fill=\"none\"/><path d=\"M46 44L50 39L54 44L57 47H46Z\" fill=\"#FFFFFF\" stroke=\"#CDC7BD\"/><circle cx=\"51\" cy=\"36\" r=\"1.8\" fill=\"#FFFFFF\"/></svg>",
+  "Levadura seca": "<svg viewBox=\"0 0 64 56\"><ellipse cx=\"32\" cy=\"47\" rx=\"26\" ry=\"5\" fill=\"#B78650\" opacity=\".3\"/><path d=\"M7 32Q32 25 57 32L50 47Q32 52 14 47Z\" fill=\"#9E622F\" stroke=\"#784322\" stroke-width=\"2\"/><ellipse cx=\"32\" cy=\"32\" rx=\"25\" ry=\"8\" fill=\"#D0A675\"/><path d=\"M12 30Q32 8 52 30Z\" fill=\"#E7C79C\"/><g fill=\"#B08A5E\"><circle cx=\"23\" cy=\"26\" r=\"1.4\"/><circle cx=\"34\" cy=\"22\" r=\"1.4\"/><circle cx=\"41\" cy=\"26\" r=\"1.5\"/></g></svg>"
+};
   const tr=document.createElement("tr");
   const label=document.createElement("td"),value=document.createElement("td");
   const wrap=document.createElement("div");wrap.className="ingredient-name";
