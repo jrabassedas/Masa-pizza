@@ -78,6 +78,84 @@ td{border-top:1px solid #bd90572b;padding:10px 6px;font-size:15px}td:last-child{
 @media(max-width:640px){.app{padding-top:9px}.hero{border-radius:18px;padding:40px 10px 19px}.pizza-logo{width:79px;height:79px}.hero h1{font-size:clamp(35px,9vw,49px)}.hero p{font-size:13px}.blackboard{display:none}.oven{width:105px;height:90px;opacity:.3;bottom:-15px;right:-20px}.leaves{width:75px;height:91px;left:-10px;opacity:.25}.card{padding:14px;border-radius:18px}.field-row{grid-template-columns:32px minmax(0,1fr) minmax(87px,112px);gap:7px;min-height:63px}.field-icon{width:31px;height:31px;font-size:19px}.field-row label{font-size:14px}.input-wrap input{padding-left:8px;padding-right:29px;font-size:16px}.select-wrap select{padding-left:8px;font-size:15px}.unit{right:7px}.actions button{font-size:13px;padding:0 7px}.stat{grid-template-columns:55px minmax(0,1fr) auto;gap:8px;padding:10px}.dough-svg{width:54px;height:48px}.stat-value{font-size:23px;padding:8px}.stat-label{font-size:11px}}
 @media(max-width:350px){.field-row{grid-template-columns:26px minmax(0,1fr) 82px;gap:5px}.field-icon{width:26px;height:26px;font-size:16px}.field-row label{font-size:13px}.dough-svg{display:none}.stat{grid-template-columns:minmax(0,1fr) auto}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Reproducción más fiel de la maqueta italiana elegida */
+html{background:#d0ae7c}
+body{background:linear-gradient(90deg,#d5b487,#f7e0bd,#d5b487)}
+.app{max-width:805px;min-height:100svh;background:linear-gradient(115deg,#f3d9af,#fff0d2 30%,#f6dfb8 82%,#eac493);box-shadow:0 0 40px #6e3c1c40;padding:0 18px 32px}
+.hero{margin:0 -18px 7px;border:0;box-shadow:none;border-radius:0;min-height:270px;background:radial-gradient(at 50% 48%,#fff5dc,#efd1a6 100%);padding:41px 12px 14px}
+.awning{height:28px;background:repeating-linear-gradient(90deg,#ac2f24 0 35px,#fff0d2 35px 70px);border-bottom:4px solid #bc8b5c}
+.hero h1{font:italic 800 clamp(40px,8vw,68px)/1.1 Georgia,serif;color:#97271d;text-shadow:1px 2px #fff1d8;letter-spacing:-2px}
+.hero p{font:clamp(14px,2.6vw,18px)/1.32 Georgia,serif;max-width:470px;margin:10px auto 0}
+.pizza-logo{width:104px;height:104px;margin:0 auto -5px}
+.blackboard{top:45px;left:11px;border:7px ridge #ac7749;font-size:22px}
+.leaves{width:155px;height:191px;left:-8px;top:32px}
+.oven{width:209px;height:198px;bottom:-12px}
+.layout{display:block}.card{background:transparent;border:0;border-radius:0;padding:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+.card:after{display:none}
+.section-head:has(#config-title){display:none}
+.form-list{background:linear-gradient(140deg,#fff7e6,#fae7c8);border:1px solid #d3a982;border-radius:23px;padding:9px 18px;box-shadow:0 5px 15px #87532c3b}
+.field-row{grid-template-columns:64px minmax(0,1fr) minmax(149px,192px);gap:10px;min-height:72px;border-bottom:1px solid #b78d6063}
+.field-row label{font:700 clamp(17px,2.8vw,21px)/1.16 Georgia,serif;color:#4d291c}
+.field-illustration{width:62px;height:54px;display:grid;place-items:center;filter:drop-shadow(0 2px 2px #63452c40)}
+.field-illustration svg{width:60px;height:52px}
+.input-wrap input,.select-wrap select{height:50px;border:1.5px solid #c79f76;border-radius:12px;background:#fffaf0;color:#352316;font:bold 22px Georgia,serif}
+.input-wrap input{padding-left:13px;padding-right:51px}
+.unit{right:33px;color:#7d5b40;font-size:11px}
+.arrow-stack{position:absolute;right:3px;top:4px;bottom:4px;display:flex;flex-direction:column;gap:0;justify-content:center}
+.arrow-stack button{display:block;width:28px;height:21px;border:0;background:transparent;color:#2c6e2c;font:800 12px Arial;padding:0;cursor:pointer}
+.arrow-stack button:active{background:#ecd6b6}
+.actions{display:grid;grid-template-columns:1.5fr .9fr;gap:12px;margin:18px 7px 6px}
+.actions button{min-height:61px;box-shadow:0 4px 3px #6f44243b;font:700 clamp(15px,3vw,21px) Georgia,serif}
+.primary{background:linear-gradient(#47833b,#285b26);color:#fffae5;border:2px solid #3a7035}
+.secondary{background:linear-gradient(#fff8e8,#fbe8cc);border:2px solid #a4362a;color:#97271d}
+.summary{justify-content:center;margin:10px 5px 3px}
+.chip{background:#fdf1d8;border-color:#cbad836e;color:#77583e;font-size:12px}
+.section-head:has(#result-title){display:block;border:0;padding:0;margin:10px 0 14px;text-align:center}
+.section-head:has(#result-title):before{content:"♧";display:block;color:#9b2d22;font:36px/1 Georgia,serif}
+#result-title{font:italic 800 clamp(36px,6vw,50px) Georgia,serif;color:#9b281e;letter-spacing:-.7px;text-shadow:1px 1px #fff3df}
+#status{display:none}
+.stat{min-height:126px;grid-template-columns:31% 1fr auto;border-radius:20px;padding:12px;background:linear-gradient(100deg,#ba392b,#8f1e19);box-shadow:0 5px 13px #812b1d46}
+.dough-svg{width:100%;height:102px}
+.stat-label{font:700 clamp(16px,3vw,22px)/1.2 Georgia,serif;color:#fff4d8}
+.stat-value{font:800 clamp(28px,5vw,43px) Georgia,serif;background:#fff1d4;color:#8e281d;border-radius:12px;padding:11px 17px;box-shadow:0 3px 0 #5d2b2377}
+.results-top{margin-bottom:10px}
+table{border:1px solid #d7b48c;border-radius:19px;background:#fff5df;border-collapse:separate;border-spacing:0;box-shadow:0 6px 14px #83502e38;padding:8px 16px 13px}
+thead{display:none}
+td{padding:11px 4px;border-bottom:1px solid #bb905d66;font:700 clamp(17px,3vw,21px) Georgia,serif}
+td:last-child{font-weight:800}
+.ingredient-icon{width:46px;height:43px;background:transparent;flex-basis:46px;display:grid;place-items:center;border-radius:0}
+.ingredient-icon svg{width:46px;height:42px;filter:drop-shadow(0 2px 2px #6b462e3a)}
+.total-row td{background:#e6ebc5;border:0!important;padding:16px 10px!important;color:#2e692d}
+.total-row td:first-child{border-radius:13px 0 0 13px}.total-row td:last-child{border-radius:0 13px 13px 0;color:#286127;font-size:24px}
+.note,.footer{display:none}
+.footer-art{height:85px;overflow:hidden;margin:15px -18px -32px}
+.footer-art svg{display:block;width:100%;height:100%}
+@media(min-width:920px){.app{margin:20px auto;border-radius:25px}.hero{border-radius:25px 25px 0 0}}
+@media(max-width:620px){
+.app{padding:0 9px 20px}.hero{margin:0 -9px 5px;min-height:200px;padding:34px 9px 16px}
+.hero h1{font-size:clamp(38px,10vw,50px)}.pizza-logo{width:76px;height:76px}.hero p{font-size:13px}
+.blackboard{display:none}.oven{width:116px;height:115px;bottom:-12px;right:-18px;opacity:.48}.leaves{width:88px;height:111px;left:-22px;opacity:.39}
+.form-list{padding:5px 8px;border-radius:18px}
+.field-row{grid-template-columns:37px minmax(0,1fr) minmax(95px,133px);min-height:63px;gap:6px}
+.field-illustration{width:37px;height:42px}.field-illustration svg{width:37px;height:40px}
+.field-row label{font-size:clamp(13px,3.7vw,16px)}
+.input-wrap input,.select-wrap select{height:43px;font-size:17px}
+.input-wrap input{padding-left:8px;padding-right:39px}
+.unit{right:26px;font-size:9px}
+.arrow-stack button{width:22px;height:18px;font-size:10px}
+.actions{margin:13px 4px 3px;gap:7px}.actions button{min-height:48px;font-size:clamp(12px,3.4vw,17px);padding:0 6px}
+.section-head:has(#result-title){margin:8px 0 11px}#result-title{font-size:39px}
+.stat{min-height:96px;grid-template-columns:24% 1fr auto;gap:7px;padding:9px}
+.dough-svg{height:75px}.stat-label{font-size:clamp(12px,3.5vw,17px)}
+.stat-value{font-size:clamp(21px,6.4vw,31px);padding:10px}
+table{padding:4px 8px 10px}td{font-size:clamp(14px,4vw,18px);padding:8px 2px}
+.ingredient-icon{width:35px;height:35px;flex-basis:35px}.ingredient-icon svg{width:35px;height:35px}
+.total-row td{padding:11px 7px!important}.total-row td:last-child{font-size:21px}
+.footer-art{height:70px;margin:12px -9px -20px}
+}
+@media(max-width:350px){.field-row{grid-template-columns:30px minmax(0,1fr) 87px;gap:4px}.field-illustration svg{width:29px}.unit{display:none}.input-wrap input{padding-right:25px}.stat-value{font-size:19px}}
+
 </style>
 </head>
 
@@ -122,12 +200,12 @@ td{border-top:1px solid #bd90572b;padding:10px 6px;font-size:15px}td:last-child{
 <div class="section-head"><h2 id="config-title" class="section-title">La tua ricetta</h2><span class="status">Configura tu masa</span></div>
 <form id="pizzaForm" autocomplete="off">
 <div class="form-list">
-<div class="field-row"><span class="field-icon" aria-hidden="true">🍞</span><label for="balls">Número de bolas</label><div class="input-wrap"><input id="balls" type="number" min="1" step="1" inputmode="numeric" enterkeyhint="next" placeholder="4"><span class="unit">uds.</span></div></div>
-<div class="field-row"><span class="field-icon" aria-hidden="true">⚖️</span><label for="ballWeight">Gramos por bola</label><div class="input-wrap"><input id="ballWeight" type="number" min="1" step="0.1" inputmode="decimal" enterkeyhint="next" placeholder="300"><span class="unit">g</span></div></div>
-<div class="field-row"><span class="field-icon" aria-hidden="true">💧</span><label for="hydration">Hidratación</label><div class="input-wrap"><input id="hydration" type="number" min="0" max="100" step="0.1" inputmode="decimal" enterkeyhint="next" value="65"><span class="unit">%</span></div></div>
-<div class="field-row"><span class="field-icon" aria-hidden="true">🌾</span><label for="integralPct">% harina integral</label><div class="input-wrap"><input id="integralPct" type="number" min="0" max="100" step="0.1" inputmode="decimal" enterkeyhint="next" value="0"><span class="unit">%</span></div></div>
-<div class="field-row"><span class="field-icon" aria-hidden="true">🥣</span><label for="yeastPerKg">Levadura seca por kg de harina</label><div class="input-wrap"><input id="yeastPerKg" type="number" min="0" step="0.01" inputmode="decimal" enterkeyhint="done" value="1.7"><span class="unit">g/kg</span></div></div>
-<div class="field-row"><span class="field-icon" aria-hidden="true">🎯</span><label for="rounding">Precisión</label><div class="select-wrap"><select id="rounding"><option value="0">Máxima</option><option value="0.1" selected>0,1 g</option><option value="0.5">0,5 g</option><option value="1">1 g</option></select></div></div>
+<div class="field-row"><span class="field-illustration" aria-hidden="true"><svg viewBox="0 0 64 56"><defs><radialGradient id="ballg"><stop stop-color="#fff9df"/><stop offset="1" stop-color="#c79d6c"/></radialGradient></defs><ellipse cx="32" cy="48" rx="29" ry="5" fill="#c2a07b" opacity=".4"/><circle cx="22" cy="34" r="17" fill="url(#ballg)" stroke="#c59e6c"/><circle cx="43" cy="35" r="15" fill="url(#ballg)" stroke="#c59e6c"/><circle cx="32" cy="17" r="15" fill="url(#ballg)" stroke="#c59e6c"/><path d="M18 30L25 27M30 15L38 11" stroke="#fff6df" stroke-width="2"/></svg></span><label for="balls">Número de bolas</label><div class="input-wrap"><input id="balls" type="number" min="1" step="1" inputmode="numeric" enterkeyhint="next" placeholder="4"><span class="unit">uds.</span><span class="arrow-stack"><button type="button" data-control="balls" data-direction="1" aria-label="Aumentar">▲</button><button type="button" data-control="balls" data-direction="-1" aria-label="Reducir">▼</button></span></div></div>
+<div class="field-row"><span class="field-illustration" aria-hidden="true"><svg viewBox="0 0 64 56"><path d="M15 13H49" stroke="#5b2a22" stroke-width="5" stroke-linecap="round"/><path d="M18 20H46L52 50H12Z" fill="#bd3e28" stroke="#8d291b" stroke-width="2"/><circle cx="32" cy="37" r="11" fill="#fbf0df" stroke="#b38d66" stroke-width="2"/><path d="M32 37L38 31" stroke="#644336" stroke-width="2"/></svg></span><label for="ballWeight">Gramos por bola</label><div class="input-wrap"><input id="ballWeight" type="number" min="1" step="0.1" inputmode="decimal" enterkeyhint="next" placeholder="300"><span class="unit">g</span><span class="arrow-stack"><button type="button" data-control="ballWeight" data-direction="1" aria-label="Aumentar">▲</button><button type="button" data-control="ballWeight" data-direction="-1" aria-label="Reducir">▼</button></span></div></div>
+<div class="field-row"><span class="field-illustration" aria-hidden="true"><svg viewBox="0 0 64 56"><defs><linearGradient id="waterg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#d9f8ff"/><stop offset=".5" stop-color="#6abccd"/><stop offset="1" stop-color="#29738d"/></linearGradient></defs><path d="M32 3Q16 26 16 38A16 16 0 0 0 48 38Q48 25 32 3Z" fill="url(#waterg)" stroke="#367e91" stroke-width="2"/><path d="M27 18Q19 31 24 42" stroke="#efffff" stroke-width="4" fill="none" stroke-linecap="round"/></svg></span><label for="hydration">Hidratación</label><div class="input-wrap"><input id="hydration" type="number" min="0" max="100" step="0.1" inputmode="decimal" enterkeyhint="next" value="65"><span class="unit">%</span><span class="arrow-stack"><button type="button" data-control="hydration" data-direction="1" aria-label="Aumentar">▲</button><button type="button" data-control="hydration" data-direction="-1" aria-label="Reducir">▼</button></span></div></div>
+<div class="field-row"><span class="field-illustration" aria-hidden="true"><svg viewBox="0 0 64 56"><path d="M8 54L55 5" stroke="#976a2d" stroke-width="2"/><g stroke="#ae6c22" stroke-width="1.5" fill="#e5ac48"><path d="M29 32Q14 30 14 20Q29 20 29 32Z"/><path d="M38 22Q23 20 23 9Q37 10 38 22Z"/><path d="M30 34Q44 28 49 17Q36 14 30 34Z"/><path d="M20 43Q35 41 40 30Q27 26 20 43Z"/></g></svg></span><label for="integralPct">% harina integral</label><div class="input-wrap"><input id="integralPct" type="number" min="0" max="100" step="0.1" inputmode="decimal" enterkeyhint="next" value="0"><span class="unit">%</span><span class="arrow-stack"><button type="button" data-control="integralPct" data-direction="1" aria-label="Aumentar">▲</button><button type="button" data-control="integralPct" data-direction="-1" aria-label="Reducir">▼</button></span></div></div>
+<div class="field-row"><span class="field-illustration" aria-hidden="true"><svg viewBox="0 0 64 56"><ellipse cx="32" cy="47" rx="26" ry="5" fill="#b78650" opacity=".3"/><path d="M7 32Q32 25 57 32L50 47Q32 52 14 47Z" fill="#9e622f" stroke="#784322" stroke-width="2"/><ellipse cx="32" cy="32" rx="25" ry="8" fill="#d0a675"/><path d="M12 30Q32 8 52 30Z" fill="#e7c79c"/><g fill="#b08a5e"><circle cx="23" cy="26" r="1.4"/><circle cx="34" cy="22" r="1.4"/><circle cx="41" cy="26" r="1.5"/></g></svg></span><label for="yeastPerKg">Levadura seca por kg de harina</label><div class="input-wrap"><input id="yeastPerKg" type="number" min="0" step="0.01" inputmode="decimal" enterkeyhint="done" value="1.7"><span class="unit">g/kg</span><span class="arrow-stack"><button type="button" data-control="yeastPerKg" data-direction="1" aria-label="Aumentar">▲</button><button type="button" data-control="yeastPerKg" data-direction="-1" aria-label="Reducir">▼</button></span></div></div>
+<div class="field-row"><span class="field-illustration" aria-hidden="true"><svg viewBox="0 0 64 56"><circle cx="32" cy="28" r="21" stroke="#39753c" stroke-width="3" fill="none"/><circle cx="32" cy="28" r="10" stroke="#39753c" stroke-width="3" fill="none"/><circle cx="32" cy="28" r="3" fill="#39753c"/><path d="M32 0V15M32 41V56M3 28H18M46 28H61" stroke="#39753c" stroke-width="3"/></svg></span><label for="rounding">Precisión</label><div class="select-wrap"><select id="rounding"><option value="0">Máxima</option><option value="0.1" selected>0,1 g</option><option value="0.5">0,5 g</option><option value="1">1 g</option></select></div></div>
 </div>
 <div class="actions"><button type="button" class="primary" id="copyBtn">▤ Copiar ingredientes</button><button type="button" class="secondary" id="resetBtn">↺ Limpiar</button></div>
 <div class="summary" id="summary" aria-live="polite"></div>
@@ -151,7 +229,7 @@ td{border-top:1px solid #bd90572b;padding:10px 6px;font-size:15px}td:last-child{
 </div>
 </section>
 </section>
-<div class="footer" aria-hidden="true">Fatto con passione</div>
+<div class="footer-art" aria-hidden="true"><svg viewBox="0 0 800 90" preserveAspectRatio="xMidYMid slice"><rect width="800" height="90" fill="#b47d5120"/><g fill="#ca3424" stroke="#a52b20" stroke-width="3"><circle cx="60" cy="57" r="34"/><circle cx="118" cy="70" r="31"/><circle cx="14" cy="74" r="28"/></g><path d="M59 22L70 36L47 36ZM118 39L130 46L110 53Z" fill="#497f36"/><g fill="#4e863d" stroke="#326b31" stroke-width="3"><path d="M216 79Q244 23 297 37Q285 79 216 79Z"/><path d="M226 79Q167 31 158 57Q180 90 226 79Z"/><path d="M267 78Q294 19 342 22Q325 68 267 78Z"/></g><path d="M662 25H810V100H662Z" fill="#fff4e0"/><path d="M684 25V100M725 25V100M768 25V100M812 25V100M659 50H810M659 85H810" stroke="#b33228" stroke-width="16" opacity=".7"/></svg></div>
 </main>
 
 
@@ -686,30 +764,22 @@ td{border-top:1px solid #bd90572b;padding:10px 6px;font-size:15px}td:last-child{
 
 
     function addRow(name, grams) {
-      const icons = {
-        "Harina normal": "🌾",
-        "Harina integral": "🌿",
-        "Agua": "💧",
-        "Sal": "🧂",
-        "Levadura seca": "🥣"
-      };
-      const tr = document.createElement("tr");
-      const tdName = document.createElement("td");
-      const tdValue = document.createElement("td");
-      const wrapper = document.createElement("div");
-      wrapper.className = "ingredient-name";
-      const icon = document.createElement("span");
-      icon.className = "ingredient-icon";
-      icon.setAttribute("aria-hidden","true");
-      icon.textContent = icons[name] || "•";
-      const label = document.createElement("span");
-      label.textContent = name;
-      wrapper.append(icon,label);
-      tdName.appendChild(wrapper);
-      tdValue.textContent = format(grams) + " g";
-      tr.append(tdName,tdValue);
-      tbody.appendChild(tr);
-    }
+  const icons={
+    "Harina normal":"<svg viewBox=\"0 0 64 56\"><path d=\"M8 54L55 5\" stroke=\"#976a2d\" stroke-width=\"2\"/><g stroke=\"#ae6c22\" stroke-width=\"1.5\" fill=\"#e5ac48\"><path d=\"M29 32Q14 30 14 20Q29 20 29 32Z\"/><path d=\"M38 22Q23 20 23 9Q37 10 38 22Z\"/><path d=\"M30 34Q44 28 49 17Q36 14 30 34Z\"/><path d=\"M20 43Q35 41 40 30Q27 26 20 43Z\"/></g></svg>",
+    "Harina integral":"<svg viewBox=\"0 0 64 56\"><path d=\"M8 54L55 5\" stroke=\"#976a2d\" stroke-width=\"2\"/><g stroke=\"#ae6c22\" stroke-width=\"1.5\" fill=\"#e5ac48\"><path d=\"M29 32Q14 30 14 20Q29 20 29 32Z\"/><path d=\"M38 22Q23 20 23 9Q37 10 38 22Z\"/><path d=\"M30 34Q44 28 49 17Q36 14 30 34Z\"/><path d=\"M20 43Q35 41 40 30Q27 26 20 43Z\"/></g></svg>",
+    "Agua":"<svg viewBox=\"0 0 64 56\"><defs><linearGradient id=\"waterg\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\"><stop stop-color=\"#d9f8ff\"/><stop offset=\".5\" stop-color=\"#6abccd\"/><stop offset=\"1\" stop-color=\"#29738d\"/></linearGradient></defs><path d=\"M32 3Q16 26 16 38A16 16 0 0 0 48 38Q48 25 32 3Z\" fill=\"url(#waterg)\" stroke=\"#367e91\" stroke-width=\"2\"/><path d=\"M27 18Q19 31 24 42\" stroke=\"#efffff\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/></svg>",
+    "Sal":"<svg viewBox=\"0 0 64 56\"><ellipse cx=\"32\" cy=\"47\" rx=\"26\" ry=\"5\" fill=\"#b78650\" opacity=\".3\"/><path d=\"M7 32Q32 25 57 32L50 47Q32 52 14 47Z\" fill=\"#9e622f\" stroke=\"#784322\" stroke-width=\"2\"/><ellipse cx=\"32\" cy=\"32\" rx=\"25\" ry=\"8\" fill=\"#d0a675\"/><path d=\"M12 30Q32 8 52 30Z\" fill=\"#e7c79c\"/><g fill=\"#b08a5e\"><circle cx=\"23\" cy=\"26\" r=\"1.4\"/><circle cx=\"34\" cy=\"22\" r=\"1.4\"/><circle cx=\"41\" cy=\"26\" r=\"1.5\"/></g></svg>",
+    "Levadura seca":"<svg viewBox=\"0 0 64 56\"><ellipse cx=\"32\" cy=\"47\" rx=\"26\" ry=\"5\" fill=\"#b78650\" opacity=\".3\"/><path d=\"M7 32Q32 25 57 32L50 47Q32 52 14 47Z\" fill=\"#9e622f\" stroke=\"#784322\" stroke-width=\"2\"/><ellipse cx=\"32\" cy=\"32\" rx=\"25\" ry=\"8\" fill=\"#d0a675\"/><path d=\"M12 30Q32 8 52 30Z\" fill=\"#e7c79c\"/><g fill=\"#b08a5e\"><circle cx=\"23\" cy=\"26\" r=\"1.4\"/><circle cx=\"34\" cy=\"22\" r=\"1.4\"/><circle cx=\"41\" cy=\"26\" r=\"1.5\"/></g></svg>"
+  };
+  const tr=document.createElement("tr");
+  const label=document.createElement("td"),value=document.createElement("td");
+  const wrap=document.createElement("div");wrap.className="ingredient-name";
+  const art=document.createElement("span");art.className="ingredient-icon";art.setAttribute("aria-hidden","true");art.innerHTML=icons[name]||"";
+  const span=document.createElement("span");span.textContent=name;
+  wrap.append(art,span);label.appendChild(wrap);
+  value.textContent=format(grams)+" g";
+  tr.append(label,value);tbody.appendChild(tr);
+}
 
     /* ====================================
        VALIDACIÓN PORCENTAJES
@@ -1126,6 +1196,20 @@ td{border-top:1px solid #bd90572b;padding:10px 6px;font-size:15px}td:last-child{
       }
     );
 
+
+    document.querySelectorAll("[data-control]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    const el=document.getElementById(button.dataset.control);
+    const dir=Number(button.dataset.direction);
+    const step=el.id==="balls"?1:el.id==="ballWeight"?10:el.id==="yeastPerKg"?0.1:1;
+    const base=el.value===""?0:Number(el.value);
+    let n=Math.round((base+dir*step)*100)/100;
+    if(el.hasAttribute("min"))n=Math.max(Number(el.min),n);
+    if(el.hasAttribute("max"))n=Math.min(Number(el.max),n);
+    el.value=String(n);
+    el.dispatchEvent(new Event("input",{bubbles:true}));
+  });
+});
 
     /* ====================================
        INICIO
